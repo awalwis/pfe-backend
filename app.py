@@ -84,5 +84,13 @@ def delete_ad(ad_id):
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
+@app.route('/api/annonce/<int:ad_id>', methods=['PUT'])
+def update_ad(ad_id):
+    try:
+        database.updateUser(request.json, ad_id)
+        return jsonify({'item': 'annonce update'}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
