@@ -10,21 +10,54 @@ warnings.filterwarnings("ignore")
 
 app = Flask(__name__)
 
+# ROUTES USER
 
-items = []
 
-
-@app.route('/api/users', methods=['GET'])
+@app.route('/api/utilisateurs', methods=['GET'])
 def get_users():
-    result = database.getusers()
-    print(result)
-    return jsonify({'item': result}), 201
+    try:
+        result = database.getusers()
+        return jsonify({'item': result}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
 
 
-@app.route('/api/user', methods=['POST'])
+@app.route('/api/utilisateur/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    try:
+        result = database.getuser(user_id)
+        return jsonify({'item': result}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+
+@app.route('/api/utilisateur', methods=['POST'])
 def add_user():
-    database.createUser(request.json)
-    return jsonify({'item': 'user created'}), 201
+    try:
+        database.createUser(request.json)
+        return jsonify({'item': 'user created'}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+
+@app.route('/api/utilisateur/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    try:
+        database.updateUser(request.json, user_id)
+        return jsonify({'item': 'user update'}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+
+@app.route('/api/utilisateur/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    try:
+        database.deleteUser(user_id)
+        return jsonify({'item': 'user deleted'}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+# ROUTES ITEM
 
 
 if __name__ == '__main__':

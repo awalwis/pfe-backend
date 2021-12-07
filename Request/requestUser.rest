@@ -1,0 +1,39 @@
+GET http://localhost:5000/api/users
+
+###
+
+GET http://localhost:5000/api/user/2
+
+###
+
+POST http://localhost:5000/api/user
+Content-Type: application/json
+
+{
+    "email": "jesuisunetomate@gmail.com",
+    "last_name": "Mate",
+    "first_name": "To",
+    "password": "Azerty",
+    "campus": "Woluwe",
+    "isAdmin": true,
+    "isBanned": false
+}
+
+###
+
+PUT http://localhost:5000/api/user/3
+Content-Type: application/json
+
+{
+    "email": "jesuisunetomate@gmail.com",
+    "last_name": "Mate",
+    "first_name": "To",
+    "password": "Azerty",
+    "campus": "Woluwe",
+    "isAdmin": true,
+    "isBanned": false
+}
+
+###
+
+DELETE http://localhost:5000/api/user/3
