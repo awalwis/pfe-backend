@@ -11,3 +11,24 @@ Content-Type: application/json
     "id_user": 1,
     "id_category":1
 }
+
+###
+
+PUT http://localhost:5000/api/annonce/3
+Content-Type: application/json
+
+{
+    "title": "Super livre !!",
+    "description": "Velo moche",
+    "price": 100,
+    "date": "07/12/2021",
+    "state": "sold",
+    "type": "sell",
+    "id_user": 1,
+    "id_category":1
+}
+
+
+###
+
+DELETE http://localhost:5000/api/annonce/1
