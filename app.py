@@ -57,6 +57,15 @@ def delete_user(user_id):
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
+
+@app.route('/api/utilisateur/ban/<int:user_id>', methods=['PUT'])
+def ban_user(user_id):
+    try:
+        database.banUser(user_id)
+        return jsonify({'item': 'utilisateur banni'}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
 # ROUTES ITEM
 
 

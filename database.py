@@ -123,6 +123,25 @@ try:
                 cursor.close()
                 connection.close()
 
+    def banUser(user_id):
+        sql = "UPDATE pfe.users SET isBanned = NOT isBanned WHERE id_user = %i" % (
+            user_id
+        )
+        try:
+            cursor.execute(sql)
+            connection.commit()
+        except(Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                return None
+            except IndexError:
+                connection.rollback()
+                print("SQL Error: %s" % str(e))
+                return None
+            finally:
+                cursor.close()
+                connection.close()
+ 
     # ITEMS
 
 except (Exception, psycopg2.DatabaseError) as e:
