@@ -68,6 +68,13 @@ def ban_user(user_id):
 
 # ROUTES ITEM
 
-
+@app.route('/api/annonce', methods=['POST'])
+def add_ad():
+    try:
+        database.createAd(request.json)
+        return jsonify({'item': 'ad created'}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+    
 if __name__ == '__main__':
     app.run(debug=True)

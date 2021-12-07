@@ -1,0 +1,13 @@
+POST http://localhost:5000/api/annonce
+Content-Type: application/json
+
+{
+    "title": "Velo",
+    "description": "Velo moche",
+    "price": 100,
+    "date": "07/12/2021",
+    "state": "sold",
+    "type": "sell",
+    "id_user": 1,
+    "id_category":1
+}

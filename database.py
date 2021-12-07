@@ -1,18 +1,20 @@
 import psycopg2
 
 try:
-    """connection = psycopg2.connect(
+    connection = psycopg2.connect(
         user="bscjhiup",
         password="StvgARUvcUaIyUO93QDagYX2dcsnJ8FR",
         host="abul.db.elephantsql.com",
         database="bscjhiup",
-        port="5432")"""
+        port="5432")
 
+    """    
     connection = psycopg2.connect(user="postgres",
                                   password="azerty",
                                   host="localhost",
                                   database="PFE",
                                   port="5432")
+    """
     print("DATABASE CONNECTED")
 
     cursor = connection.cursor()
@@ -143,6 +145,23 @@ try:
                 connection.close()
  
     # ITEMS
+    def createAd(ad):
+        sql = "INSERT INTO pfe.ads VALUES (DEFAULT,'%s','%s',%i,'%s','%s','%s',%i ,%i)" % (
+            ad['title'], ad['description'], ad['price'], ad['date'], ad['state'], ad['type'], ad['id_user'], ad['id_category'])
+        try:
+            cursor.execute(sql)
+            connection.commit()
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                connection.rollback()
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()            
 
 except (Exception, psycopg2.DatabaseError) as e:
     print("DATABASE NOT CONNECTED")
