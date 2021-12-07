@@ -17,7 +17,7 @@ app = Flask(__name__)
 @app.route('/api/utilisateurs', methods=['GET'])
 def get_users():
     try:
-        result = database.getUsers()
+        result = database.getusers()
         return jsonify({'users': result}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
@@ -26,7 +26,7 @@ def get_users():
 @app.route('/api/utilisateur/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     try:
-        result = database.getUser(user_id)
+        result = database.getuser(user_id)
         return jsonify({'user': result}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
@@ -145,33 +145,6 @@ def get_ad(ad_id):
     try:
         result = database.getAd(ad_id)
         return jsonify({'ads': result}), 201
-    except (Exception) as e:
-        return jsonify({e.args[0]: e.args[1]}), 500
-
-
-@app.route('/api/annonce', methods=['POST'])
-def add_ad():
-    try:
-        database.createAd(request.json)
-        return jsonify({'ad': 'ad created'}), 201
-    except (Exception) as e:
-        return jsonify({e.args[0]: e.args[1]}), 500
-
-
-@app.route('/api/annonce/<int:ad_id>', methods=['DELETE'])
-def delete_ad(ad_id):
-    try:
-        database.deleteAd(ad_id)
-        return jsonify({'item': 'annonce supprimee'}), 201
-    except (Exception) as e:
-        return jsonify({e.args[0]: e.args[1]}), 500
-
-
-@app.route('/api/annonce/<int:ad_id>', methods=['PUT'])
-def update_ad(ad_id):
-    try:
-        database.updateUser(request.json, ad_id)
-        return jsonify({'item': 'annonce update'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 

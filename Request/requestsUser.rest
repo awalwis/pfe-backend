@@ -1,12 +1,12 @@
-GET http://localhost:5000/api/utilisateurs
+GET http://localhost:5000/api/users
 
 ###
 
-GET http://localhost:5000/api/utilisateur/2
+GET http://localhost:5000/api/user/2
 
 ###
 
-POST http://localhost:5000/api/utilisateur
+POST http://localhost:5000/api/user
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:5000/api/utilisateur/3
+PUT http://localhost:5000/api/user/3
 Content-Type: application/json
 
 {
@@ -36,9 +36,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:5000/api/utilisateur/3
-
-
-### 
-
-PUT http://localhost:5000/api/utilisateur/ban/1
+DELETE http://localhost:5000/api/user/3
