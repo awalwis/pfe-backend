@@ -14,3 +14,7 @@ Content-Type: application/json
     "isAdmin": true,
     "isBanned": false
 }
+
+###
+
+PUT http://localhost:5000/api/utilisateurs/1
