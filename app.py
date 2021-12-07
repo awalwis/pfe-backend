@@ -67,14 +67,22 @@ def ban_user(user_id):
         return jsonify({e.args[0]: e.args[1]}), 500
 
 # ROUTES ITEM
-
+    
 @app.route('/api/annonce', methods=['POST'])
 def add_ad():
     try:
         database.createAd(request.json)
-        return jsonify({'item': 'ad created'}), 201
+        return jsonify({'ad': 'ad created'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
-    
+
+@app.route('/api/annonce/<int:ad_id>', methods=['DELETE'])
+def delete_ad(ad_id):
+    try:
+        database.deleteAd(ad_id)
+        return jsonify({'item': 'annonce supprimee'}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
