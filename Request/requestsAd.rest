@@ -1,0 +1,81 @@
+GET http://localhost:5000/api/annonces
+
+###
+
+GET http://localhost:5000/api/annonces?categorie=Velos
+
+###
+
+GET http://localhost:5000/api/annonces?tri=DESC
+
+###
+
+GET http://localhost:5000/api/annonces?prixMin=100
+
+###
+
+GET http://localhost:5000/api/annonces?prixMax=100
+
+###
+
+GET http://localhost:5000/api/annonces?prixMin=100&prixMax=100
+
+###
+
+GET http://localhost:5000/api/annonces?categorie=Velos&tri=DESC
+
+###
+
+GET http://localhost:5000/api/annonces?categorie=Velos&prixMin=500
+
+###
+
+GET http://localhost:5000/api/annonces?categorie=Velos&prixMax=100
+
+###
+
+GET http://localhost:5000/api/annonces?categorie=Velos&prixMin=100&prixMax=100
+
+###
+
+GET http://localhost:5000/api/annonces?tri=ASC&prixMin=300
+
+###
+
+GET http://localhost:5000/api/annonces?tri=DESC&prixMax=100
+
+###
+
+GET http://localhost:5000/api/annonces?tri=DESC&prixMin=100&prixMax=100
+
+###
+
+GET http://localhost:5000/api/annonces?categorie=Velos&tri=ASC&prixMin=300
+
+###
+
+GET http://localhost:5000/api/annonces?categorie=Velos&tri=DESC&prixMax=300
+
+###
+
+GET http://localhost:5000/api/annonces?categorie=Velos&tri=ASC&prixMin=500&prixMax=500
+
+###
+
+GET http://localhost:5000/api/annonce/1
+
+###
+
+POST http://localhost:5000/api/annonce
+Content-Type: application/json
+
+{
+    "title": "Velo",
+    "description": "Velo moche",
+    "price": 100,
+    "date": "07/12/2021",
+    "state": "sold",
+    "type": "sell",
+    "id_user": 1,
+    "id_category":1
+}

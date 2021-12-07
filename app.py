@@ -1,3 +1,4 @@
+import sys
 import warnings
 
 import subprocess
@@ -17,7 +18,7 @@ app = Flask(__name__)
 def get_users():
     try:
         result = database.getusers()
-        return jsonify({'item': result}), 201
+        return jsonify({'users': result}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -26,7 +27,7 @@ def get_users():
 def get_user(user_id):
     try:
         result = database.getuser(user_id)
-        return jsonify({'item': result}), 201
+        return jsonify({'user': result}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -35,7 +36,7 @@ def get_user(user_id):
 def add_user():
     try:
         database.createUser(request.json)
-        return jsonify({'item': 'user created'}), 201
+        return jsonify({'user': 'user created'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -44,7 +45,7 @@ def add_user():
 def update_user(user_id):
     try:
         database.updateUser(request.json, user_id)
-        return jsonify({'item': 'user update'}), 201
+        return jsonify({'user': 'user update'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -53,7 +54,7 @@ def update_user(user_id):
 def delete_user(user_id):
     try:
         database.deleteUser(user_id)
-        return jsonify({'item': 'user deleted'}), 201
+        return jsonify({'user': 'user deleted'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -62,11 +63,90 @@ def delete_user(user_id):
 def ban_user(user_id):
     try:
         database.banUser(user_id)
-        return jsonify({'item': 'utilisateur banni'}), 201
+        return jsonify({'user': 'utilisateur banni'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
-# ROUTES ITEM
+# ROUTES AD
+
+
+@app.route('/api/annonces', methods=['GET'])
+def get_ads():
+    try:
+        result = None
+        if(not request.args.get('categorie') and not request.args.get('tri') and not request.args.get('prixMin') and not request.args.get('prixMax')):
+            result = database.getAds()
+        elif(request.args.get('categorie') and not request.args.get('tri') and not request.args.get('prixMin') and not request.args.get('prixMax')):
+            category = database.getCategoryByName(
+                request.args.get('categorie'))
+            result = database.getAdsWithCategory(category['id_category'])
+        elif(not request.args.get('categorie') and request.args.get('tri') and not request.args.get('prixMin') and not request.args.get('prixMax')):
+            result = database.getAdsWithSort(request.args.get('tri'))
+        elif(not request.args.get('categorie') and not request.args.get('tri') and request.args.get('prixMin') and not request.args.get('prixMax')):
+            result = database.getAdsByPrice(
+                int(request.args.get('prixMin')), sys.maxsize)
+        elif(not request.args.get('categorie') and not request.args.get('tri') and not request.args.get('prixMin') and request.args.get('prixMax')):
+            result = database.getAdsByPrice(
+                0, int(request.args.get('prixMax')))
+        elif(not request.args.get('categorie') and not request.args.get('tri') and request.args.get('prixMin') and request.args.get('prixMax')):
+            result = database.getAdsByPrice(int(request.args.get(
+                'prixMin')), int(request.args.get('prixMax')))
+        elif(request.args.get('categorie') and request.args.get('tri') and not request.args.get('prixMin') and not request.args.get('prixMax')):
+            category = database.getCategoryByName(
+                request.args.get('categorie'))
+            result = database.getAdsByCategoryAndSort(
+                category['id_category'], request.args.get('tri'))
+        elif(request.args.get('categorie') and not request.args.get('tri') and request.args.get('prixMin') and not request.args.get('prixMax')):
+            category = database.getCategoryByName(
+                request.args.get('categorie'))
+            result = database.getAdsByCategoryAndPrice(
+                category['id_category'], int(request.args.get('prixMin')), sys.maxsize)
+        elif(request.args.get('categorie') and not request.args.get('tri') and not request.args.get('prixMin') and request.args.get('prixMax')):
+            category = database.getCategoryByName(
+                request.args.get('categorie'))
+            result = database.getAdsByCategoryAndPrice(
+                category['id_category'], 0, int(request.args.get('prixMax')))
+        elif(request.args.get('categorie') and not request.args.get('tri') and request.args.get('prixMin') and request.args.get('prixMax')):
+            category = database.getCategoryByName(
+                request.args.get('categorie'))
+            result = database.getAdsByCategoryAndPrice(
+                category['id_category'], int(request.args.get('prixMin')), int(request.args.get('prixMax')))
+        elif(not request.args.get('categorie') and request.args.get('tri') and request.args.get('prixMin') and not request.args.get('prixMax')):
+            result = database.getAdsBySortAndPrice(request.args.get(
+                'tri'), int(request.args.get('prixMin')), sys.maxsize)
+        elif(not request.args.get('categorie') and request.args.get('tri') and not request.args.get('prixMin') and request.args.get('prixMax')):
+            result = database.getAdsBySortAndPrice(
+                request.args.get('tri'), 0, int(request.args.get('prixMax')))
+        elif(not request.args.get('categorie') and request.args.get('tri') and request.args.get('prixMin') and request.args.get('prixMax')):
+            result = database.getAdsBySortAndPrice(request.args.get(
+                'tri'), int(request.args.get('prixMin')), int(request.args.get('prixMax')))
+        elif(request.args.get('categorie') and request.args.get('tri') and request.args.get('prixMin') and not request.args.get('prixMax')):
+            category = database.getCategoryByName(
+                request.args.get('categorie'))
+            result = database.getAdsByCategoryAndSortAndPrice(category['id_category'], request.args.get(
+                'tri'), int(request.args.get('prixMin')), sys.maxsize)
+        elif(request.args.get('categorie') and request.args.get('tri') and not request.args.get('prixMin') and request.args.get('prixMax')):
+            category = database.getCategoryByName(
+                request.args.get('categorie'))
+            result = database.getAdsByCategoryAndSortAndPrice(
+                category['id_category'], request.args.get('tri'), 0, int(request.args.get('prixMax')))
+        else:
+            category = database.getCategoryByName(
+                request.args.get('categorie'))
+            result = database.getAdsByCategoryAndSortAndPrice(category['id_category'], request.args.get(
+                'tri'), int(request.args.get('prixMin')), int(request.args.get('prixMax')))
+        return jsonify({'ads': result}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+
+@app.route('/api/annonce/<int:ad_id>', methods=['GET'])
+def get_ad(ad_id):
+    try:
+        result = database.getAd(ad_id)
+        return jsonify({'ads': result}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
 
 
 if __name__ == '__main__':

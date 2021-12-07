@@ -21,20 +21,24 @@ try:
 
     def getusers():
         sql = "SELECT * FROM pfe.users"
-        resultsExportEtudiants = []
+        resultsExportUsers = []
         try:
             cursor.execute(sql)
             connection.commit()
             results = cursor.fetchall()
             for row in results:
-                item = {
+                user = {
                     "id_user": row[0],
                     "email": row[1],
                     "last_name": row[2],
-                    "first_name": row[3]
+                    "first_name": row[3],
+                    "password": row[4],
+                    "campus": row[5],
+                    "isadmin": row[6],
+                    "isbanned": row[7]
                 }
-                resultsExportEtudiants.append(item)
-            return resultsExportEtudiants
+                resultsExportUsers.append(user)
+            return resultsExportUsers
         except (Exception, psycopg2.DatabaseError) as e:
             try:
                 print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
@@ -52,13 +56,17 @@ try:
             cursor.execute(sql)
             connection.commit()
             result = cursor.fetchone()
-            item = {
+            user = {
                 "id_user": result[0],
                 "email": result[1],
                 "last_name": result[2],
-                "first_name": result[3]
+                "first_name": result[3],
+                "password": result[4],
+                "campus": result[5],
+                "isadmin": result[6],
+                "isbanned": result[7]
             }
-            return item
+            return user
         except (Exception, psycopg2.DatabaseError) as e:
             try:
                 print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
@@ -141,8 +149,324 @@ try:
             finally:
                 cursor.close()
                 connection.close()
- 
-    # ITEMS
+
+    # ADS
+
+    def getAds():
+        sql = "SELECT * FROM pfe.ads"
+        resultsExportAds = []
+        try:
+            cursor.execute(sql)
+            connection.commit()
+            results = cursor.fetchall()
+            for row in results:
+                ad = {
+                    "id_ad": row[0],
+                    "title": row[1],
+                    "description": row[2],
+                    "price": row[3],
+                    "date": row[4],
+                    "state": row[5],
+                    "type": row[6],
+                    "id_user": row[7],
+                    "id_category": row[8]
+                }
+                resultsExportAds.append(ad)
+            return resultsExportAds
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def getAdsWithCategory(id_category):
+        sql = "SELECT * FROM pfe.ads WHERE id_category=%i" % (id_category)
+        resultsExportAds = []
+        try:
+            cursor.execute(sql)
+            connection.commit()
+            results = cursor.fetchall()
+            for row in results:
+                ad = {
+                    "id_ad": row[0],
+                    "title": row[1],
+                    "description": row[2],
+                    "price": row[3],
+                    "date": row[4],
+                    "state": row[5],
+                    "type": row[6],
+                    "id_user": row[7],
+                    "id_category": row[8]
+                }
+                resultsExportAds.append(ad)
+            return resultsExportAds
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def getAdsWithSort(sort):
+        sql = "SELECT * FROM pfe.ads ORDER BY price %s" % (sort)
+        resultsExportAds = []
+        try:
+            cursor.execute(sql)
+            connection.commit()
+            results = cursor.fetchall()
+            for row in results:
+                ad = {
+                    "id_ad": row[0],
+                    "title": row[1],
+                    "description": row[2],
+                    "price": row[3],
+                    "date": row[4],
+                    "state": row[5],
+                    "type": row[6],
+                    "id_user": row[7],
+                    "id_category": row[8]
+                }
+                resultsExportAds.append(ad)
+            return resultsExportAds
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def getAdsByPrice(priceMin, priceMax):
+        sql = "SELECT * FROM pfe.ads WHERE price BETWEEN %i AND %i" % (
+            priceMin, priceMax)
+        resultsExportAds = []
+        try:
+            cursor.execute(sql)
+            connection.commit()
+            results = cursor.fetchall()
+            for row in results:
+                ad = {
+                    "id_ad": row[0],
+                    "title": row[1],
+                    "description": row[2],
+                    "price": row[3],
+                    "date": row[4],
+                    "state": row[5],
+                    "type": row[6],
+                    "id_user": row[7],
+                    "id_category": row[8]
+                }
+                resultsExportAds.append(ad)
+            return resultsExportAds
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def getAdsByCategoryAndSort(id_category, sort):
+        sql = "SELECT * FROM pfe.ads WHERE id_category=%i ORDER BY price %s" % (
+            id_category, sort)
+        resultsExportAds = []
+        try:
+            cursor.execute(sql)
+            connection.commit()
+            results = cursor.fetchall()
+            for row in results:
+                ad = {
+                    "id_ad": row[0],
+                    "title": row[1],
+                    "description": row[2],
+                    "price": row[3],
+                    "date": row[4],
+                    "state": row[5],
+                    "type": row[6],
+                    "id_user": row[7],
+                    "id_category": row[8]
+                }
+                resultsExportAds.append(ad)
+            return resultsExportAds
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def getAdsByCategoryAndPrice(id_category, prixMin, prixMax):
+        sql = "SELECT * FROM pfe.ads WHERE id_category=%i AND price BETWEEN %i AND %i" % (
+            id_category, prixMin, prixMax)
+        resultsExportAds = []
+        try:
+            cursor.execute(sql)
+            connection.commit()
+            results = cursor.fetchall()
+            for row in results:
+                ad = {
+                    "id_ad": row[0],
+                    "title": row[1],
+                    "description": row[2],
+                    "price": row[3],
+                    "date": row[4],
+                    "state": row[5],
+                    "type": row[6],
+                    "id_user": row[7],
+                    "id_category": row[8]
+                }
+                resultsExportAds.append(ad)
+            return resultsExportAds
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def getAdsBySortAndPrice(sort, prixMin, prixMax):
+        sql = "SELECT * FROM pfe.ads WHERE price BETWEEN %i AND %i ORDER BY price %s" % (
+            prixMin, prixMax, sort)
+        resultsExportAds = []
+        try:
+            cursor.execute(sql)
+            connection.commit()
+            results = cursor.fetchall()
+            for row in results:
+                ad = {
+                    "id_ad": row[0],
+                    "title": row[1],
+                    "description": row[2],
+                    "price": row[3],
+                    "date": row[4],
+                    "state": row[5],
+                    "type": row[6],
+                    "id_user": row[7],
+                    "id_category": row[8]
+                }
+                resultsExportAds.append(ad)
+            return resultsExportAds
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def getAdsByCategoryAndSortAndPrice(id_category, sort, prixMin, prixMax):
+        sql = "SELECT * FROM pfe.ads WHERE id_category=%i AND price BETWEEN %i AND %i ORDER BY price %s" % (
+            id_category, prixMin, prixMax, sort)
+        resultsExportAds = []
+        try:
+            cursor.execute(sql)
+            connection.commit()
+            results = cursor.fetchall()
+            for row in results:
+                ad = {
+                    "id_ad": row[0],
+                    "title": row[1],
+                    "description": row[2],
+                    "price": row[3],
+                    "date": row[4],
+                    "state": row[5],
+                    "type": row[6],
+                    "id_user": row[7],
+                    "id_category": row[8]
+                }
+                resultsExportAds.append(ad)
+            return resultsExportAds
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def getAd(id):
+        sql = "SELECT * FROM pfe.ads WHERE id_ad=%i" % (id)
+        try:
+            cursor.execute(sql)
+            connection.commit()
+            results = cursor.fetchone()
+            ad = {
+                "id_ad": results[0],
+                "title": results[1],
+                "description": results[2],
+                "price": results[3],
+                "date": results[4],
+                "state": results[5],
+                "type": results[6],
+                "id_user": results[7],
+                "id_category": results[8]
+            }
+            return ad
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    # CATEGORIES
+
+    def getCategoryByName(name):
+        sql = "SELECT * FROM pfe.categories WHERE name='%s'" % (name)
+        try:
+            cursor.execute(sql)
+            connection.commit()
+            results = cursor.fetchone()
+            ad = {
+                "id_category": results[0],
+                "name": results[1],
+                "parent_category": results[2]
+            }
+            return ad
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
 
 except (Exception, psycopg2.DatabaseError) as e:
     print("DATABASE NOT CONNECTED")
