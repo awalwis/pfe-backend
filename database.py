@@ -13,13 +13,14 @@ try:
                                   host="localhost",
                                   database="PFE",
                                   port="5432")
+
     print("DATABASE CONNECTED")
 
     cursor = connection.cursor()
 
     # USERS
 
-    def getusers():
+    def getUsers():
         sql = "SELECT * FROM pfe.users"
         resultsExportUsers = []
         try:
@@ -50,7 +51,7 @@ try:
                 cursor.close()
                 connection.close()
 
-    def getuser(id):
+    def getUser(id):
         sql = "SELECT * FROM pfe.users WHERE id_user = %i" % (id)
         try:
             cursor.execute(sql)
@@ -275,6 +276,7 @@ try:
                 print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
                 raise Exception(e.args[1])
             except IndexError:
+                connection.rollback()
                 print("SQL Error: %s" % str(e))
                 raise Exception(e.args[1])
             finally:
@@ -308,6 +310,7 @@ try:
                 print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
                 raise Exception(e.args[1])
             except IndexError:
+                connection.rollback()
                 print("SQL Error: %s" % str(e))
                 raise Exception(e.args[1])
             finally:
@@ -341,6 +344,7 @@ try:
                 print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
                 raise Exception(e.args[1])
             except IndexError:
+                connection.rollback()
                 print("SQL Error: %s" % str(e))
                 raise Exception(e.args[1])
             finally:
@@ -414,21 +418,21 @@ try:
                 connection.close()
 
     def getAd(id):
-        sql = "SELECT * FROM pfe.ads WHERE id_ad=%i" % (id)
+        sql = "SELECT * FROM pfe.ads WHERE id_ad = %i" % (id)
         try:
             cursor.execute(sql)
             connection.commit()
-            results = cursor.fetchone()
+            result = cursor.fetchone()
             ad = {
-                "id_ad": results[0],
-                "title": results[1],
-                "description": results[2],
-                "price": results[3],
-                "date": results[4],
-                "state": results[5],
-                "type": results[6],
-                "id_user": results[7],
-                "id_category": results[8]
+                "id_ad": result[0],
+                "title": result[1],
+                "description": result[2],
+                "price": result[3],
+                "date": result[4],
+                "sate": result[5],
+                "type": result[6],
+                "id_user": result[7],
+                "id_category": result[8]
             }
             return ad
         except (Exception, psycopg2.DatabaseError) as e:
@@ -436,6 +440,59 @@ try:
                 print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
                 raise Exception(e.args[1])
             except IndexError:
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def createAd(ad):
+        sql = "INSERT INTO pfe.ads VALUES (DEFAULT,'%s','%s',%i,'%s','%s','%s',%i ,%i)" % (
+            ad['title'], ad['description'], ad['price'], ad['date'], ad['state'], ad['type'], ad['id_user'], ad['id_category'])
+        try:
+            cursor.execute(sql)
+            connection.commit()
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                connection.rollback()
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def deleteAd(id):
+        sql = "DELETE FROM pfe.ads WHERE id_ad = %i" % (id)
+        try:
+            cursor.execute(sql)
+            connection.commit()
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                connection.rollback()
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
+    def updateUser(ad, id):
+        sql = "UPDATE pfe.ads SET title = '%s', description = '%s', price = %i, date = '%s', state = '%s', type = '%s', id_user = %i, id_category= %i WHERE id_ad = %i" % (
+            ad['title'], ad['description'], ad['price'], ad['date'], ad['state'], ad['type'], ad['id_user'], ad['id_category'], id)
+        try:
+            cursor.execute(sql)
+            connection.commit()
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                connection.rollback()
                 print("SQL Error: %s" % str(e))
                 raise Exception(e.args[1])
             finally:
@@ -444,18 +501,18 @@ try:
 
     # CATEGORIES
 
-    def getCategoryByName(name):
-        sql = "SELECT * FROM pfe.categories WHERE name='%s'" % (name)
+    def getCategoryByName(name_category):
+        sql = "SELECT * FROM pfe.categories WHERE name='%s'" % (name_category)
         try:
             cursor.execute(sql)
             connection.commit()
-            results = cursor.fetchone()
-            ad = {
-                "id_category": results[0],
-                "name": results[1],
-                "parent_category": results[2]
+            result = cursor.fetchone()
+            category = {
+                "id_category": result[0],
+                "name": result[1],
+                "parent_category": result[2]
             }
-            return ad
+            return category
         except (Exception, psycopg2.DatabaseError) as e:
             try:
                 print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
@@ -466,7 +523,6 @@ try:
             finally:
                 cursor.close()
                 connection.close()
-
 
 except (Exception, psycopg2.DatabaseError) as e:
     print("DATABASE NOT CONNECTED")
