@@ -163,6 +163,23 @@ try:
                 cursor.close()
                 connection.close()            
 
+    def deleteAd(id):
+        sql = "DELETE FROM pfe.ads WHERE id_ad = %i" % (id)
+        try:
+            cursor.execute(sql)
+            connection.commit()
+        except (Exception, psycopg2.DatabaseError) as e:
+            try:
+                print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+                raise Exception(e.args[1])
+            except IndexError:
+                connection.rollback()
+                print("SQL Error: %s" % str(e))
+                raise Exception(e.args[1])
+            finally:
+                cursor.close()
+                connection.close()
+
 except (Exception, psycopg2.DatabaseError) as e:
     print("DATABASE NOT CONNECTED")
     print("CONNECTION Error: %s" % str(e))
