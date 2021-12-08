@@ -93,8 +93,8 @@ def getUser(id):
 def createUser(user):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "INSERT INTO pfe.users VALUES (DEFAULT,'%s','%s','%s','%s','%s','%s')" % (
-        user['email'], user['last_name'], user['first_name'], user['password'], user['campus'], user['role'])
+    sql = "INSERT INTO pfe.users VALUES (DEFAULT,'%s','%s','%s','%s','%s',DEFAULT)" % (
+        user['email'], user['last_name'], user['first_name'], user['password'], user['campus'])
     try:
         cursor.execute(sql)
         connection.commit()
@@ -572,6 +572,7 @@ def getCategoryByName(name_category):
         cursor.close()
         connection.close()
 
+
 def getCategories():
     connection = initialiseConnection()
     cursor = connection.cursor()
@@ -600,6 +601,7 @@ def getCategories():
         cursor.close()
         connection.close()
 
+
 def getCategoryById(id):
     connection = initialiseConnection()
     cursor = connection.cursor()
@@ -611,10 +613,10 @@ def getCategoryById(id):
         connection.commit()
         result = cursor.fetchone()
         category = {
-                "id_category": result[0],
-                "name": result[1],
-                "parent_category": result[2]
-            }
+            "id_category": result[0],
+            "name": result[1],
+            "parent_category": result[2]
+        }
         return category
     except (Exception, psycopg2.DatabaseError) as e:
         try:
@@ -627,12 +629,13 @@ def getCategoryById(id):
         cursor.close()
         connection.close()
 
+
 def createCategory(category):
     connection = initialiseConnection()
     cursor = connection.cursor()
     sql = "INSERT INTO pfe.categories VALUES(DEFAULT, '%s', %i)" % (
         category['name'], category['parent_category']
-    )    
+    )
     try:
         cursor.execute(sql)
         connection.commit()
@@ -647,4 +650,3 @@ def createCategory(category):
     finally:
         cursor.close()
         connection.close()
-          

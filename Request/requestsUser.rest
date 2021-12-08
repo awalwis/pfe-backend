@@ -14,13 +14,12 @@ Content-Type: application/json
     "last_name": "Mate",
     "first_name": "To",
     "password": "Azerty",
-    "campus": "Woluwe",
-    "role": "Admin"
+    "campus": "Woluwe"
 }
 
 ###
 
-PUT http://localhost:5000/api/utilisateurs/4
+PUT http://localhost:5000/api/utilisateurs/2
 Content-Type: application/json
 
 {
