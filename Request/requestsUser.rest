@@ -1,8 +1,12 @@
+### TOKEN ADMIN
+
 GET http://localhost:5000/api/utilisateurs
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoiYWRtaW4ifQ.EDHVyMuW-q6qbjR3OrpY_H19wNX6hESwnN4VzbAKUSg
 
-###
+### TOKEN USER 1
 
-GET http://localhost:5000/api/utilisateurs/3
+GET http://localhost:5000/api/utilisateurs/1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
 
 ###
 
@@ -17,20 +21,22 @@ Content-Type: application/json
     "campus": "Woluwe"
 }
 
-###
+### TOKEN USER 1
 
-PUT http://localhost:5000/api/utilisateurs/2
+PUT http://localhost:5000/api/utilisateurs/1
 Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
 
 {
-    "email": "jesuisunetomate@gmail.com",
-    "last_name": "Mate",
-    "first_name": "To",
-    "password": "Azerty",
+    "email": "ntm@gmail.com",
+    "last_name": "Clooney",
+    "first_name": "George",
+    "password": "Test",
     "campus": "Woluwe",
-    "role": "Mute"
+    "role": "Admin"
 }
 
-###
+### TOKEN USER 1
 
-DELETE http://localhost:5000/api/utilisateurs/4
+DELETE http://localhost:5000/api/utilisateurs/1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk

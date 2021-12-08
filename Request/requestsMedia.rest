@@ -1,5 +1,6 @@
 POST http://localhost:5000/api/medias
 Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
 
 {
     "type": "image",
@@ -7,10 +8,11 @@ Content-Type: application/json
     "id_ad": 1
 }
 
-###
+### TOKEN USER 1
 
 POST http://localhost:5000/api/medias
 Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
 
 {
     "type": "video",
@@ -18,18 +20,26 @@ Content-Type: application/json
     "id_ad": 1
 }
 
-###
+### TOKEN ADMIN
 
 GET http://localhost:5000/api/medias
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoiYWRtaW4ifQ.EDHVyMuW-q6qbjR3OrpY_H19wNX6hESwnN4VzbAKUSg
 
 ###
 
 GET http://localhost:5000/api/medias/3
 
-###
+### TOKEN USER 1
 
 GET http://localhost:5000/api/medias/ad/1
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
 
-###
+### TOKEN USER 2
 
-DELETE http://localhost:5000/api/medias/2
+DELETE http://localhost:5000/api/medias/5
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoyLCJyb2xlIjoidXNlciJ9.TdMCqeSDnPT17-CdO-2cjooQyEDOn6BH_uoUSlTDuu8
+
+### TOKEN ADMIN
+
+DELETE http://localhost:5000/api/medias/4
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoiYWRtaW4ifQ.EDHVyMuW-q6qbjR3OrpY_H19wNX6hESwnN4VzbAKUSg

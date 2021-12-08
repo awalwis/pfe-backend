@@ -50,10 +50,10 @@ def getUsers():
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -80,10 +80,10 @@ def getUser(id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
 
         cursor.close()
@@ -101,11 +101,11 @@ def createUser(user):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -122,11 +122,11 @@ def updateUser(user, id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -142,11 +142,11 @@ def deleteUser(id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -181,10 +181,10 @@ def getAds():
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -217,10 +217,10 @@ def getAdsWithCategory(id_category):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -253,10 +253,10 @@ def getAdsWithSort(sort):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -290,11 +290,11 @@ def getAdsByPrice(priceMin, priceMax):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -328,11 +328,11 @@ def getAdsByCategoryAndSort(id_category, sort):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -366,11 +366,11 @@ def getAdsByCategoryAndPrice(id_category, prixMin, prixMax):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -404,10 +404,10 @@ def getAdsBySortAndPrice(sort, prixMin, prixMax):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -441,10 +441,10 @@ def getAdsByCategoryAndSortAndPrice(id_category, sort, prixMin, prixMax):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -474,10 +474,10 @@ def getAd(id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -494,11 +494,11 @@ def createAd(ad):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -514,11 +514,11 @@ def deleteAd(id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -535,11 +535,11 @@ def updateAd(ad, id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -564,10 +564,10 @@ def getCategoryByName(name_category):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -593,10 +593,10 @@ def getCategories():
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -621,10 +621,10 @@ def getCategoryById(id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -647,11 +647,11 @@ def createCategory(category):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -680,10 +680,10 @@ def getMedias():
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -707,10 +707,10 @@ def getMediaById(media_id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -737,10 +737,10 @@ def getMediaByIdAd(ad_id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -756,11 +756,11 @@ def deleteMedia(id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -778,11 +778,11 @@ def createMedia(media):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
@@ -798,11 +798,11 @@ def deleteMedia(id):
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception(e.args[1])
+            raise Exception from e
         except IndexError:
             connection.rollback()
             print("SQL Error: %s" % str(e))
-            raise Exception(e.args[1])
+            raise Exception from e
     finally:
         cursor.close()
         connection.close()
