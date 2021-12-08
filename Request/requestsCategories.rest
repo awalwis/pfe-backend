@@ -1,4 +1,15 @@
 GET http://localhost:5000/api/categories
 
+###
 
-GET http://localhost:5000/api/categorie/1
+GET http://localhost:5000/api/categories/1
+
+###
+
+POST http://localhost:5000/api/categories
+Content-Type: application/json
+
+{
+    "name": "Jardin",
+    "parent_category": 0
+}
