@@ -135,7 +135,7 @@ def get_ads():
 def get_ad(ad_id):
     try:
         result = database.getAd(ad_id)
-        return jsonify({'ads': result}), 201
+        return jsonify({'ad': result}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -153,7 +153,7 @@ def add_ad():
 def delete_ad(ad_id):
     try:
         database.deleteAd(ad_id)
-        return jsonify({'item': 'annonce supprimee'}), 201
+        return jsonify({'ad': 'annonce supprimee'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -162,7 +162,7 @@ def delete_ad(ad_id):
 def update_ad(ad_id):
     try:
         database.updateAd(request.json, ad_id)
-        return jsonify({'item': 'annonce update'}), 201
+        return jsonify({'ad': 'annonce update'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -173,7 +173,7 @@ def update_ad(ad_id):
 def get_categories():
     try:
         result = database.getCategories()
-        return jsonify({'item': result}), 201
+        return jsonify({'categories': result}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -182,7 +182,7 @@ def get_categories():
 def get_category(category_id):
     try:
         result = database.getCategoryById(category_id)
-        return jsonify({'item': result}), 201
+        return jsonify({'category': result}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -191,7 +191,54 @@ def get_category(category_id):
 def add_category():
     try:
         database.createCategory(request.json)
-        return jsonify({'user': 'category created'}), 201
+        return jsonify({'category': 'category created'}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+# ROUTE MEDIAS
+
+
+@app.route('/api/medias', methods=['GET'])
+def get_medias():
+    try:
+        result = database.getMedias()
+        return jsonify({'medias': result}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+
+@app.route('/api/medias/<int:media_id>', methods=['GET'])
+def get_media(media_id):
+    try:
+        result = database.getMediaById(media_id)
+        return jsonify({'media': result}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+
+@app.route('/api/medias/ad/<int:ad_id>', methods=['GET'])
+def get_media_by_ad_id(ad_id):
+    try:
+        result = database.getMediaByIdAd(ad_id)
+        return jsonify({'medias': result}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+
+@app.route('/api/medias', methods=['POST'])
+def add_media():
+    try:
+        database.createMedia(request.json)
+        return jsonify({'media': 'media created'}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+
+@app.route('/api/medias/<int:medias>', methods=['DELETE'])
+def delete_media(medias):
+    try:
+        database.deleteMedia(medias)
+        return jsonify({'media': 'media supprimee'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 

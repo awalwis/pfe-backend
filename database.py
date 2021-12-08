@@ -633,9 +633,165 @@ def getCategoryById(id):
 def createCategory(category):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "INSERT INTO pfe.categories VALUES(DEFAULT, '%s', %i)" % (
-        category['name'], category['parent_category']
+    if(category['parent_category'] != 0):
+        sql = "INSERT INTO pfe.categories VALUES(DEFAULT, '%s', %i)" % (
+            category['name'], category['parent_category']
+        )
+    else:
+        sql = "INSERT INTO pfe.categories VALUES(DEFAULT, '%s', NULL)" % (
+            category['name']
+        )
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception(e.args[1])
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception(e.args[1])
+    finally:
+        cursor.close()
+        connection.close()
+
+# MEDIAS
+
+
+def getMedias():
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.medias"
+    resultMedias = []
+    try:
+        cursor.execute(sql)
+        connection.commit()
+        results = cursor.fetchall()
+        for row in results:
+            media = {
+                "id_media": row[0],
+                "type": row[1],
+                "url": row[2],
+                "id_ad": row[3]
+            }
+            resultMedias.append(media)
+        return resultMedias
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception(e.args[1])
+        except IndexError:
+            print("SQL Error: %s" % str(e))
+            raise Exception(e.args[1])
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def getMediaById(media_id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.medias WHERE id_media = %i" % (media_id)
+    try:
+        cursor.execute(sql)
+        connection.commit()
+        results = cursor.fetchone()
+        media = {
+            "id_media": results[0],
+            "type": results[1],
+            "url": results[2],
+            "id_ad": results[3]
+        }
+        return media
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception(e.args[1])
+        except IndexError:
+            print("SQL Error: %s" % str(e))
+            raise Exception(e.args[1])
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def getMediaByIdAd(ad_id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.medias WHERE id_ad = %i" % (ad_id)
+    resultMedias = []
+    try:
+        cursor.execute(sql)
+        connection.commit()
+        results = cursor.fetchall()
+        for row in results:
+            media = {
+                "id_media": row[0],
+                "type": row[1],
+                "url": row[2],
+                "id_ad": row[3]
+            }
+            resultMedias.append(media)
+        return resultMedias
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception(e.args[1])
+        except IndexError:
+            print("SQL Error: %s" % str(e))
+            raise Exception(e.args[1])
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def deleteMedia(id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "DELETE FROM pfe.medias WHERE id_media = %i" % (id)
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception(e.args[1])
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception(e.args[1])
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def createMedia(media):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "INSERT INTO pfe.medias VALUES(DEFAULT, '%s', '%s', %i)" % (
+        media['type'], media['url'], media['id_ad']
     )
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception(e.args[1])
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception(e.args[1])
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def deleteMedia(id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "DELETE FROM pfe.medias WHERE id_media = %i" % (id)
     try:
         cursor.execute(sql)
         connection.commit()
