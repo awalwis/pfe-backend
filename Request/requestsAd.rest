@@ -62,11 +62,11 @@ GET http://localhost:5000/api/annonces?categorie=Velos&tri=ASC&prixMin=500&prixM
 
 ###
 
-GET http://localhost:5000/api/annonce/3
+GET http://localhost:5000/api/annonces/3
 
 ###
 
-POST http://localhost:5000/api/annonce
+POST http://localhost:5000/api/annonces
 Content-Type: application/json
 
 {
@@ -83,7 +83,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:5000/api/annonce/5
+PUT http://localhost:5000/api/annonces/5
 Content-Type: application/json
 
 {
@@ -101,4 +101,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:5000/api/annonce/5
+DELETE http://localhost:5000/api/annonces/5
