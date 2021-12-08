@@ -47,6 +47,13 @@ def get_user(user_id):
     except (Exception) as e:
         return jsonify({e.__class__.__name__: e.args[0]}), 500
 
+@app.route('/api/utilisateurs/<email>', methods=['GET'])
+def get_user_by_email(email):
+    try:
+        result = database.getUserByEmail(email)
+        return jsonify({'user': result}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
 
 @app.route('/api/utilisateurs', methods=['POST'])
 def add_user():
