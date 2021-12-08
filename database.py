@@ -3,18 +3,18 @@ import psycopg2
 
 def initialiseConnection():
     try:
-        """connection = psycopg2.connect(
+        connection = psycopg2.connect(
             user="bscjhiup",
             password="StvgARUvcUaIyUO93QDagYX2dcsnJ8FR",
             host="abul.db.elephantsql.com",
             database="bscjhiup",
-            port="5432")"""
+            port="5432")
 
-        connection = psycopg2.connect(user="postgres",
+        """connection = psycopg2.connect(user="postgres",
                                       password="azerty",
                                       host="localhost",
                                       database="PFE",
-                                      port="5432")
+                                      port="5432")"""
 
         print("DATABASE CONNECTED")
         return connection
