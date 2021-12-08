@@ -234,10 +234,10 @@ def add_media():
         return jsonify({e.args[0]: e.args[1]}), 500
 
 
-@app.route('/api/medias/<int:medias>', methods=['DELETE'])
-def delete_media(medias):
+@app.route('/api/medias/<int:media_id>', methods=['DELETE'])
+def delete_media(media_id):
     try:
-        database.deleteMedia(medias)
+        database.deleteMedia(media_id)
         return jsonify({'media': 'media supprimee'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
