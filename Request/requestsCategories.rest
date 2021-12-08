@@ -4,12 +4,13 @@ GET http://localhost:5000/api/categories
 
 GET http://localhost:5000/api/categories/1
 
-###
+### TOKEN ADMIN
 
 POST http://localhost:5000/api/categories
 Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoiYWRtaW4ifQ.EDHVyMuW-q6qbjR3OrpY_H19wNX6hESwnN4VzbAKUSg
 
 {
-    "name": "Jardin",
+    "name": "NTM",
     "parent_category": 0
 }

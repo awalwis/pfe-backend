@@ -60,14 +60,16 @@ GET http://localhost:5000/api/annonces?categorie=Velos&tri=DESC&prixMax=300
 
 GET http://localhost:5000/api/annonces?categorie=Velos&tri=ASC&prixMin=500&prixMax=500
 
-###
+### TOKEN USER 1
 
 GET http://localhost:5000/api/annonces/3
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
 
-###
+### TOKEN USER 1
 
 POST http://localhost:5000/api/annonces
 Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
 
 {
     "title": "Velo",
@@ -81,10 +83,11 @@ Content-Type: application/json
     "id_category":1
 }
 
-###
+### TOKEN USER 1
 
 PUT http://localhost:5000/api/annonces/5
 Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
 
 {
     "title": "Super livre !!",
@@ -99,6 +102,7 @@ Content-Type: application/json
 }
 
 
-###
+### TOKEN USER 1
 
-DELETE http://localhost:5000/api/annonces/5
+DELETE http://localhost:5000/api/annonces/6
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
