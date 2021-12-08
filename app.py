@@ -175,6 +175,33 @@ def update_ad(ad_id):
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
+# ROUTE CATEGORIES 
+@app.route('/api/categories', methods=['GET'])
+def get_categories():
+    try:
+        result = database.getCategories()
+        return jsonify({'item': result}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+@app.route('/api/categorie/<int:category_id>', methods=['GET'])
+def get_category(category_id):
+    try:
+        result = database.getCategoryById(category_id)
+        return jsonify({'item': result}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+
+@app.route('/api/categories', methods=['POST'])
+def add_category():
+    try:
+        database.createCategory(request.json)
+        return jsonify({'user': 'category created'}), 201
+    except (Exception) as e:
+        return jsonify({e.args[0]: e.args[1]}), 500
+    
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
