@@ -54,9 +54,9 @@ def getUsers():
         except IndexError:
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def getUser(id):
@@ -85,7 +85,7 @@ def getUser(id):
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
     finally:
-        print("TEST")
+
         cursor.close()
         connection.close()
 
@@ -106,9 +106,9 @@ def createUser(user):
             connection.rollback()
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def updateUser(user, id):
@@ -127,9 +127,9 @@ def updateUser(user, id):
             connection.rollback()
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def deleteUser(id):
@@ -147,9 +147,9 @@ def deleteUser(id):
             connection.rollback()
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 # ADS
 
@@ -185,9 +185,9 @@ def getAds():
         except IndexError:
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def getAdsWithCategory(id_category):
@@ -221,9 +221,9 @@ def getAdsWithCategory(id_category):
         except IndexError:
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def getAdsWithSort(sort):
@@ -257,9 +257,9 @@ def getAdsWithSort(sort):
         except IndexError:
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def getAdsByPrice(priceMin, priceMax):
@@ -295,9 +295,9 @@ def getAdsByPrice(priceMin, priceMax):
             connection.rollback()
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def getAdsByCategoryAndSort(id_category, sort):
@@ -333,9 +333,9 @@ def getAdsByCategoryAndSort(id_category, sort):
             connection.rollback()
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def getAdsByCategoryAndPrice(id_category, prixMin, prixMax):
@@ -371,9 +371,9 @@ def getAdsByCategoryAndPrice(id_category, prixMin, prixMax):
             connection.rollback()
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def getAdsBySortAndPrice(sort, prixMin, prixMax):
@@ -408,9 +408,9 @@ def getAdsBySortAndPrice(sort, prixMin, prixMax):
         except IndexError:
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def getAdsByCategoryAndSortAndPrice(id_category, sort, prixMin, prixMax):
@@ -445,9 +445,9 @@ def getAdsByCategoryAndSortAndPrice(id_category, sort, prixMin, prixMax):
         except IndexError:
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def getAd(id):
@@ -478,9 +478,9 @@ def getAd(id):
         except IndexError:
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def createAd(ad):
@@ -499,9 +499,9 @@ def createAd(ad):
             connection.rollback()
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def deleteAd(id):
@@ -519,9 +519,9 @@ def deleteAd(id):
             connection.rollback()
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def updateAd(ad, id):
@@ -540,9 +540,9 @@ def updateAd(ad, id):
             connection.rollback()
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
 
 # CATEGORIES
 
@@ -568,6 +568,83 @@ def getCategoryByName(name_category):
         except IndexError:
             print("SQL Error: %s" % str(e))
             raise Exception(e.args[1])
-        finally:
-            cursor.close()
-            connection.close()
+    finally:
+        cursor.close()
+        connection.close()
+
+def getCategories():
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.categories"
+    resultCategories = []
+    try:
+        cursor.execute(sql)
+        connection.commit()
+        results = cursor.fetchall()
+        for row in results:
+            category = {
+                "id_category": row[0],
+                "name": row[1],
+                "parent_category": row[2]
+            }
+            resultCategories.append(category)
+        return resultCategories
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception(e.args[1])
+        except IndexError:
+            print("SQL Error: %s" % str(e))
+            raise Exception(e.args[1])
+    finally:
+        cursor.close()
+        connection.close()
+
+def getCategoryById(id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.categories WHERE id_category = %i" % (
+        id
+    )
+    try:
+        cursor.execute(sql)
+        connection.commit()
+        result = cursor.fetchone()
+        category = {
+                "id_category": result[0],
+                "name": result[1],
+                "parent_category": result[2]
+            }
+        return category
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception(e.args[1])
+        except IndexError:
+            print("SQL Error: %s" % str(e))
+            raise Exception(e.args[1])
+    finally:
+        cursor.close()
+        connection.close()
+
+def createCategory(category):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "INSERT INTO pfe.categories VALUES(DEFAULT, '%s', %i)" % (
+        category['name'], category['parent_category']
+    )    
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception(e.args[1])
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception(e.args[1])
+    finally:
+        cursor.close()
+        connection.close()
+          
