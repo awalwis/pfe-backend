@@ -23,7 +23,7 @@ def get_users():
         return jsonify({e.args[0]: e.args[1]}), 500
 
 
-@app.route('/api/utilisateur/<int:user_id>', methods=['GET'])
+@app.route('/api/utilisateurs/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     try:
         result = database.getUser(user_id)
@@ -32,7 +32,7 @@ def get_user(user_id):
         return jsonify({e.args[0]: e.args[1]}), 500
 
 
-@app.route('/api/utilisateur', methods=['POST'])
+@app.route('/api/utilisateurs', methods=['POST'])
 def add_user():
     try:
         database.createUser(request.json)
@@ -41,7 +41,7 @@ def add_user():
         return jsonify({e.args[0]: e.args[1]}), 500
 
 
-@app.route('/api/utilisateur/<int:user_id>', methods=['PUT'])
+@app.route('/api/utilisateurs/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     try:
         database.updateUser(request.json, user_id)
@@ -50,20 +50,11 @@ def update_user(user_id):
         return jsonify({e.args[0]: e.args[1]}), 500
 
 
-@app.route('/api/utilisateur/<int:user_id>', methods=['DELETE'])
+@app.route('/api/utilisateurs/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     try:
         database.deleteUser(user_id)
         return jsonify({'user': 'user deleted'}), 201
-    except (Exception) as e:
-        return jsonify({e.args[0]: e.args[1]}), 500
-
-
-@app.route('/api/utilisateur/ban/<int:user_id>', methods=['PUT'])
-def ban_user(user_id):
-    try:
-        database.banUser(user_id)
-        return jsonify({'user': 'utilisateur banni'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -140,7 +131,7 @@ def get_ads():
         return jsonify({e.args[0]: e.args[1]}), 500
 
 
-@app.route('/api/annonce/<int:ad_id>', methods=['GET'])
+@app.route('/api/annonces/<int:ad_id>', methods=['GET'])
 def get_ad(ad_id):
     try:
         result = database.getAd(ad_id)
@@ -149,7 +140,7 @@ def get_ad(ad_id):
         return jsonify({e.args[0]: e.args[1]}), 500
 
 
-@app.route('/api/annonce', methods=['POST'])
+@app.route('/api/annonces', methods=['POST'])
 def add_ad():
     try:
         database.createAd(request.json)
@@ -158,7 +149,7 @@ def add_ad():
         return jsonify({e.args[0]: e.args[1]}), 500
 
 
-@app.route('/api/annonce/<int:ad_id>', methods=['DELETE'])
+@app.route('/api/annonces/<int:ad_id>', methods=['DELETE'])
 def delete_ad(ad_id):
     try:
         database.deleteAd(ad_id)
@@ -167,7 +158,7 @@ def delete_ad(ad_id):
         return jsonify({e.args[0]: e.args[1]}), 500
 
 
-@app.route('/api/annonce/<int:ad_id>', methods=['PUT'])
+@app.route('/api/annonces/<int:ad_id>', methods=['PUT'])
 def update_ad(ad_id):
     try:
         database.updateAd(request.json, ad_id)
@@ -175,7 +166,9 @@ def update_ad(ad_id):
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
-# ROUTE CATEGORIES 
+# ROUTE CATEGORIES
+
+
 @app.route('/api/categories', methods=['GET'])
 def get_categories():
     try:
@@ -184,13 +177,15 @@ def get_categories():
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
-@app.route('/api/categorie/<int:category_id>', methods=['GET'])
+
+@app.route('/api/categories/<int:category_id>', methods=['GET'])
 def get_category(category_id):
     try:
         result = database.getCategoryById(category_id)
         return jsonify({'item': result}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
+
 
 @app.route('/api/categories', methods=['POST'])
 def add_category():
@@ -199,8 +194,6 @@ def add_category():
         return jsonify({'user': 'category created'}), 201
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
-    
-
 
 
 if __name__ == '__main__':
