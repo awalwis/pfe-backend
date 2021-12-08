@@ -62,7 +62,7 @@ GET http://localhost:5000/api/annonces?categorie=Velos&tri=ASC&prixMin=500&prixM
 
 ###
 
-GET http://localhost:5000/api/annonce/1
+GET http://localhost:5000/api/annonce/3
 
 ###
 
@@ -76,29 +76,14 @@ Content-Type: application/json
     "date": "07/12/2021",
     "state": "sold",
     "type": "sell",
+    "displayed_picture":0,
     "id_user": 1,
     "id_category":1
 }
 
 ###
 
-POST http://localhost:5000/api/annonce
-Content-Type: application/json
-
-{
-    "title": "Velo",
-    "description": "Velo moche",
-    "price": 100,
-    "date": "07/12/2021",
-    "state": "sold",
-    "type": "sell",
-    "id_user": 1,
-    "id_category":1
-}
-
-###
-
-PUT http://localhost:5000/api/annonce/3
+PUT http://localhost:5000/api/annonce/5
 Content-Type: application/json
 
 {
@@ -106,8 +91,9 @@ Content-Type: application/json
     "description": "Velo moche",
     "price": 100,
     "date": "07/12/2021",
-    "state": "sold",
+    "state": "available",
     "type": "sell",
+    "displayed_picture":0,
     "id_user": 1,
     "id_category":1
 }
@@ -115,4 +101,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:5000/api/annonce/1
+DELETE http://localhost:5000/api/annonce/5

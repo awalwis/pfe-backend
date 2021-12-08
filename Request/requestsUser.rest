@@ -2,7 +2,7 @@ GET http://localhost:5000/api/utilisateurs
 
 ###
 
-GET http://localhost:5000/api/utilisateur/2
+GET http://localhost:5000/api/utilisateur/3
 
 ###
 
@@ -15,13 +15,12 @@ Content-Type: application/json
     "first_name": "To",
     "password": "Azerty",
     "campus": "Woluwe",
-    "isAdmin": true,
-    "isBanned": false
+    "role": "Admin"
 }
 
 ###
 
-PUT http://localhost:5000/api/utilisateur/3
+PUT http://localhost:5000/api/utilisateur/4
 Content-Type: application/json
 
 {
@@ -30,15 +29,9 @@ Content-Type: application/json
     "first_name": "To",
     "password": "Azerty",
     "campus": "Woluwe",
-    "isAdmin": true,
-    "isBanned": false
+    "role": "Mute"
 }
 
 ###
 
-DELETE http://localhost:5000/api/utilisateur/3
-
-
-### 
-
-PUT http://localhost:5000/api/utilisateur/ban/1
+DELETE http://localhost:5000/api/utilisateur/4
