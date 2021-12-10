@@ -12,8 +12,9 @@ from flask_cors import CORS
 warnings.filterwarnings("ignore")
 
 app = Flask(__name__)
-cors = CORS(app, resources={
-            r"/api/*": {"origins": "http://pfe-market-vinci.herokuapp.com"}})
+"""cors = CORS(app, resources={
+            r"/api/*": {"origins": "http://pfe-market-vinci.herokuapp.com"}})"""
+CORS(app)
 
 # ROUTES USER
 
