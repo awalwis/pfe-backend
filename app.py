@@ -12,7 +12,7 @@ from flask_cors import CORS
 warnings.filterwarnings("ignore")
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+cors = CORS(app)
 
 # ROUTES USER
 
