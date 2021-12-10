@@ -89,6 +89,36 @@ def getUser(id):
         cursor.close()
         connection.close()
 
+def getUserByEmail(email):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.users WHERE email = '%s'" % (email)
+    try:
+        cursor.execute(sql)
+        connection.commit()
+        result = cursor.fetchone()
+        user = {
+            "id_user": result[0],
+            "email": result[1],
+            "last_name": result[2],
+            "first_name": result[3],
+            "password": result[4],
+            "campus": result[5],
+            "role": result[6]
+        }
+        return user
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception(e.args[1])
+        except IndexError:
+            print("SQL Error: %s" % str(e))
+            raise Exception(e.args[1])
+    finally:
+
+        cursor.close()
+        connection.close()        
+
 
 def createUser(user):
     connection = initialiseConnection()

@@ -40,3 +40,7 @@ Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNl
 
 DELETE http://localhost:5000/api/utilisateurs/1
 Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
+
+###
+
+GET http://localhost:5000/api/utilisateurs/jesuisunetomate@gmail.com
