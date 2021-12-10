@@ -89,6 +89,7 @@ def getUser(id):
         cursor.close()
         connection.close()
 
+
 def getUserByEmail(email):
     connection = initialiseConnection()
     cursor = connection.cursor()
@@ -117,7 +118,7 @@ def getUserByEmail(email):
     finally:
 
         cursor.close()
-        connection.close()        
+        connection.close()
 
 
 def createUser(user):
@@ -187,7 +188,7 @@ def deleteUser(id):
 def getAds():
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads"
+    sql = "SELECT * FROM pfe.ads WHERE state='available'"
     resultsExportAds = []
     try:
         cursor.execute(sql)
@@ -223,7 +224,8 @@ def getAds():
 def getAdsWithCategory(id_category):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE id_category=%i" % (id_category)
+    sql = "SELECT * FROM pfe.ads WHERE state='available' AND id_category=%i" % (
+        id_category)
     resultsExportAds = []
     try:
         cursor.execute(sql)
@@ -259,7 +261,8 @@ def getAdsWithCategory(id_category):
 def getAdsWithSort(sort):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads ORDER BY price %s" % (sort)
+    sql = "SELECT * FROM pfe.ads WHERE state='available' ORDER BY price %s" % (
+        sort)
     resultsExportAds = []
     try:
         cursor.execute(sql)
@@ -295,7 +298,7 @@ def getAdsWithSort(sort):
 def getAdsByPrice(priceMin, priceMax):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE price BETWEEN %i AND %i" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='available' AND price BETWEEN %i AND %i" % (
         priceMin, priceMax)
     resultsExportAds = []
     try:
@@ -333,7 +336,7 @@ def getAdsByPrice(priceMin, priceMax):
 def getAdsByCategoryAndSort(id_category, sort):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE id_category=%i ORDER BY price %s" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='available' AND id_category=%i ORDER BY price %s" % (
         id_category, sort)
     resultsExportAds = []
     try:
@@ -371,7 +374,7 @@ def getAdsByCategoryAndSort(id_category, sort):
 def getAdsByCategoryAndPrice(id_category, prixMin, prixMax):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE id_category=%i AND price BETWEEN %i AND %i" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='available' AND id_category=%i AND price BETWEEN %i AND %i" % (
         id_category, prixMin, prixMax)
     resultsExportAds = []
     try:
@@ -409,7 +412,7 @@ def getAdsByCategoryAndPrice(id_category, prixMin, prixMax):
 def getAdsBySortAndPrice(sort, prixMin, prixMax):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE price BETWEEN %i AND %i ORDER BY price %s" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='available' AND price BETWEEN %i AND %i ORDER BY price %s" % (
         prixMin, prixMax, sort)
     resultsExportAds = []
     try:
@@ -446,8 +449,44 @@ def getAdsBySortAndPrice(sort, prixMin, prixMax):
 def getAdsByCategoryAndSortAndPrice(id_category, sort, prixMin, prixMax):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE id_category=%i AND price BETWEEN %i AND %i ORDER BY price %s" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='available' AND id_category=%i AND price BETWEEN %i AND %i ORDER BY price %s" % (
         id_category, prixMin, prixMax, sort)
+    resultsExportAds = []
+    try:
+        cursor.execute(sql)
+        connection.commit()
+        results = cursor.fetchall()
+        for row in results:
+            ad = {
+                "id_ad": row[0],
+                "title": row[1],
+                "description": row[2],
+                "price": row[3],
+                "date": row[4],
+                "state": row[5],
+                "type": row[6],
+                "displayed_picture": row[7],
+                "id_user": row[8],
+                "id_category": row[9]
+            }
+            resultsExportAds.append(ad)
+        return resultsExportAds
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def getAllAds():
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.ads"
     resultsExportAds = []
     try:
         cursor.execute(sql)

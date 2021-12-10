@@ -60,6 +60,11 @@ GET http://localhost:5000/api/annonces?categorie=Velos&tri=DESC&prixMax=300
 
 GET http://localhost:5000/api/annonces?categorie=Velos&tri=ASC&prixMin=500&prixMax=500
 
+### TOKEN ADMIN
+
+GET http://localhost:5000/api/annonces/all
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoiYWRtaW4ifQ.EDHVyMuW-q6qbjR3OrpY_H19wNX6hESwnN4VzbAKUSg
+
 ### TOKEN USER 1
 
 GET http://localhost:5000/api/annonces/3
