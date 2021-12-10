@@ -179,10 +179,10 @@ def get_ads():
 @ app.route('/api/annonces/all', methods=['GET'])
 def get_all_ads():
     try:
-        decodedToken = jwt.decode(request.headers.get(
+        """decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            raise ValueError("NOT AUTHORIZED")
+            raise ValueError("NOT AUTHORIZED")"""
 
         result = database.getAllAds()
         return jsonify({'ad': result}), 201
