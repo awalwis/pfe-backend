@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore")
 
 app = Flask(__name__)
 cors = CORS(app, resources={
-            r"/api/*": {"origins": "http://pfe-market-vinci.herokuapp.com/"}})
+            r"/api/*": {"origins": "http://pfe-market-vinci.herokuapp.com"}})
 
 # ROUTES USER
 
