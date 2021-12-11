@@ -28,7 +28,7 @@ def get_users():
             raise ValueError("NOT AUTHORIZED")"""
 
         result = database.getUsers()
-        return jsonify({'users': result}), 201
+        return jsonify({'users': result}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -45,7 +45,7 @@ def get_user(user_id):
                 raise ValueError("NOT AUTHORIZED")"""
 
         result = database.getUser(user_id)
-        return jsonify({'user': result}), 201
+        return jsonify({'user': result}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -56,7 +56,7 @@ def get_user(user_id):
 def get_user_by_email(email):
     try:
         result = database.getUserByEmail(email)
-        return jsonify({'user': result}), 201
+        return jsonify({'user': result}), 200
     except (Exception) as e:
         return jsonify({e.args[0]: e.args[1]}), 500
 
@@ -80,7 +80,7 @@ def update_user(user_id):
                 raise ValueError("NOT AUTHORIZED")"""
 
         database.updateUser(request.json, user_id)
-        return jsonify({'user': 'user update'}), 201
+        return jsonify({'user': 'user update'}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -97,7 +97,7 @@ def delete_user(user_id):
                 raise ValueError("NOT AUTHORIZED")"""
 
         database.deleteUser(user_id)
-        return jsonify({'user': 'user deleted'}), 201
+        return jsonify({'user': 'user deleted'}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -171,7 +171,7 @@ def get_ads():
                 request.args.get('categorie'))
             result = database.getAdsByCategoryAndSortAndPrice(category['id_category'], request.args.get(
                 'tri'), int(request.args.get('prixMin')), int(request.args.get('prixMax')))
-        return jsonify({'ads': result}), 201
+        return jsonify({'ads': result}), 200
     except (Exception) as e:
         return jsonify({e.__class__.__name__: e.args[0]}), 500
 
@@ -185,7 +185,7 @@ def get_all_ads():
             raise ValueError("NOT AUTHORIZED")"""
 
         result = database.getAllAds()
-        return jsonify({'ad': result}), 201
+        return jsonify({'ad': result}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -199,7 +199,7 @@ def get_ad(ad_id):
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])"""
 
         result = database.getAd(ad_id)
-        return jsonify({'ad': result}), 201
+        return jsonify({'ad': result}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -212,8 +212,8 @@ def add_ad():
         """jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])"""
 
-        database.createAd(request.json)
-        return jsonify({'ad': 'ad created'}), 201
+        result = database.createAd(request.json)
+        return jsonify(result), 201
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -231,7 +231,7 @@ def delete_ad(ad_id):
                 raise ValueError("NOT AUTHORIZED")"""
 
         database.deleteAd(ad_id)
-        return jsonify({'ad': 'annonce supprimee'}), 201
+        return jsonify({'ad': 'annonce supprimee'}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -249,7 +249,7 @@ def update_ad(ad_id):
                 raise ValueError("NOT AUTHORIZED")"""
 
         database.updateAd(request.json, ad_id)
-        return jsonify({'ad': 'annonce update'}), 201
+        return jsonify({'ad': 'annonce update'}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -262,7 +262,7 @@ def update_ad(ad_id):
 def get_categories():
     try:
         result = database.getCategories()
-        return jsonify({'categories': result}), 201
+        return jsonify({'categories': result}), 200
     except (Exception) as e:
         return jsonify({e.__class__.__name__: e.args[0]}), 500
 
@@ -271,7 +271,7 @@ def get_categories():
 def get_category(category_id):
     try:
         result = database.getCategoryById(category_id)
-        return jsonify({'category': result}), 201
+        return jsonify({'category': result}), 200
     except (Exception) as e:
         return jsonify({e.__class__.__name__: e.args[0]}), 500
 
@@ -303,7 +303,7 @@ def get_medias():
             raise ValueError("NOT AUTHORIZED")"""
 
         result = database.getMedias()
-        return jsonify({'medias': result}), 201
+        return jsonify({'medias': result}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -314,7 +314,7 @@ def get_medias():
 def get_media(media_id):
     try:
         result = database.getMediaById(media_id)
-        return jsonify({'media': result}), 201
+        return jsonify({'media': result}), 200
     except (Exception) as e:
         return jsonify({e.__class__.__name__: e.args[0]}), 500
 
@@ -326,7 +326,7 @@ def get_media_by_ad_id(ad_id):
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])"""
 
         result = database.getMediaByIdAd(ad_id)
-        return jsonify({'medias': result}), 201
+        return jsonify({'medias': result}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
@@ -359,7 +359,7 @@ def delete_media(media_id):
                 raise ValueError("NOT AUTHORIZED")"""
 
         database.deleteMedia(media_id)
-        return jsonify({'media': 'media supprimee'}), 201
+        return jsonify({'media': 'media supprimee'}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:

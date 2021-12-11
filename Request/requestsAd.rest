@@ -84,13 +84,13 @@ Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNl
     "state": "sold",
     "type": "sell",
     "displayed_picture":0,
-    "id_user": 1,
+    "id_user": 14,
     "id_category":1
 }
 
 ### TOKEN USER 1
 
-PUT http://localhost:5000/api/annonces/5
+PUT http://localhost:5000/api/annonces/50
 Content-Type: application/json
 Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNlciJ9.5Kz5-0BMKEGQy_PpJqbygyXIYpANsvf6FaPBDadk5Uk
 
@@ -102,8 +102,8 @@ Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoidXNl
     "state": "available",
     "type": "sell",
     "displayed_picture":0,
-    "id_user": 1,
-    "id_category":1
+    "id_user": 14,
+    "id_category":2
 }
 
 
