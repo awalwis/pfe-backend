@@ -555,11 +555,16 @@ def getAd(id):
 def createAd(ad):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "INSERT INTO pfe.ads VALUES (DEFAULT,'%s','%s',%i,'%s','%s','%s',%i,%i,%i)" % (
+    sql = "SELECT pfe.addAds('%s','%s',%i,'%s','%s','%s',%i,%i,%i)" % (
         ad['title'], ad['description'], ad['price'], ad['date'], ad['state'], ad['type'], ad['displayed_picture'], ad['id_user'], ad['id_category'])
     try:
         cursor.execute(sql)
         connection.commit()
+        result = cursor.fetchone()
+        ad = {
+            "id_ad": result[0]
+        }
+        return ad
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
