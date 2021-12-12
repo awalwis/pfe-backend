@@ -185,7 +185,7 @@ def get_all_ads():
             raise ValueError("NOT AUTHORIZED")"""
 
         result = database.getAllAds()
-        return jsonify({'ad': result}), 200
+        return jsonify({'ads': result}), 200
     except (jwt.InvalidTokenError) as e:
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
