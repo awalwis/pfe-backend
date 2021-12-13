@@ -291,6 +291,21 @@ def add_category():
     except (Exception) as e:
         return jsonify({e.__class__.__name__: e.args[0]}), 500
 
+
+@ app.route('/api/categories/<int:category_id>', methods=['DELETE'])
+def delete_category(category_id):
+    try:
+        """decodedToken = jwt.decode(request.headers.get(
+            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
+        if(decodedToken['role'] != "admin"):
+            raise ValueError("NOT AUTHORIZED")"""
+        database.deleteCategory(category_id)
+        return jsonify({'category': 'category '+str(category_id)+' supprimee'}), 200
+    except (jwt.InvalidTokenError) as e:
+        return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
+    except (Exception) as e:
+        return jsonify({e.__class__.__name__: e.args[0]}), 500
+
 # ROUTE MEDIAS
 
 
