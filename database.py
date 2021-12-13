@@ -1,14 +1,18 @@
 import psycopg2
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def initialiseConnection():
     try:
         connection = psycopg2.connect(
-            user="bscjhiup",
-            password="StvgARUvcUaIyUO93QDagYX2dcsnJ8FR",
-            host="abul.db.elephantsql.com",
-            database="bscjhiup",
-            port="5432")
+            user=os.environ.get("DATABASE_USER"),
+            password=os.environ.get("DATABASE_PASSWORD"),
+            host=os.environ.get("DATABASE_HOST"),
+            database=os.environ.get("DATABASE_NAME"),
+            port=os.environ.get("DATABASE_PORT"))
 
         """connection = psycopg2.connect(user="postgres",
                                       password="azerty",
