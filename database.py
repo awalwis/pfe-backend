@@ -188,7 +188,7 @@ def deleteUser(id):
 def getAds():
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE state='available'"
+    sql = "SELECT * FROM pfe.ads WHERE state='disponible'"
     resultsExportAds = []
     try:
         cursor.execute(sql)
@@ -224,7 +224,7 @@ def getAds():
 def getAdsWithCategory(id_category):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE state='available' AND id_category=%i" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='disponible' AND id_category=%i" % (
         id_category)
     resultsExportAds = []
     try:
@@ -261,7 +261,7 @@ def getAdsWithCategory(id_category):
 def getAdsWithSort(sort):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE state='available' ORDER BY price %s" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='disponible' ORDER BY price %s" % (
         sort)
     resultsExportAds = []
     try:
@@ -298,7 +298,7 @@ def getAdsWithSort(sort):
 def getAdsByPrice(priceMin, priceMax):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE state='available' AND price BETWEEN %i AND %i" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='disponible' AND price BETWEEN %i AND %i" % (
         priceMin, priceMax)
     resultsExportAds = []
     try:
@@ -336,7 +336,7 @@ def getAdsByPrice(priceMin, priceMax):
 def getAdsByCategoryAndSort(id_category, sort):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE state='available' AND id_category=%i ORDER BY price %s" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='disponible' AND id_category=%i ORDER BY price %s" % (
         id_category, sort)
     resultsExportAds = []
     try:
@@ -374,7 +374,7 @@ def getAdsByCategoryAndSort(id_category, sort):
 def getAdsByCategoryAndPrice(id_category, prixMin, prixMax):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE state='available' AND id_category=%i AND price BETWEEN %i AND %i" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='disponible' AND id_category=%i AND price BETWEEN %i AND %i" % (
         id_category, prixMin, prixMax)
     resultsExportAds = []
     try:
@@ -412,7 +412,7 @@ def getAdsByCategoryAndPrice(id_category, prixMin, prixMax):
 def getAdsBySortAndPrice(sort, prixMin, prixMax):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE state='available' AND price BETWEEN %i AND %i ORDER BY price %s" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='disponible' AND price BETWEEN %i AND %i ORDER BY price %s" % (
         prixMin, prixMax, sort)
     resultsExportAds = []
     try:
@@ -449,7 +449,7 @@ def getAdsBySortAndPrice(sort, prixMin, prixMax):
 def getAdsByCategoryAndSortAndPrice(id_category, sort, prixMin, prixMax):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE state='available' AND id_category=%i AND price BETWEEN %i AND %i ORDER BY price %s" % (
+    sql = "SELECT * FROM pfe.ads WHERE state='disponible' AND id_category=%i AND price BETWEEN %i AND %i ORDER BY price %s" % (
         id_category, prixMin, prixMax, sort)
     resultsExportAds = []
     try:
@@ -715,6 +715,26 @@ def createCategory(category):
         sql = "INSERT INTO pfe.categories VALUES(DEFAULT, '%s', NULL)" % (
             category['name']
         )
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def deleteCategory(id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "DELETE FROM pfe.categories WHERE id_category = %i" % (id)
     try:
         cursor.execute(sql)
         connection.commit()

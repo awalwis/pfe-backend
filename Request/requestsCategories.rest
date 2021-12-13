@@ -14,3 +14,8 @@ Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoiYWRt
     "name": "NTM",
     "parent_category": 0
 }
+
+### TOKEN ADMIN
+
+DELETE http://localhost:5000/api/categories/10
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoxLCJyb2xlIjoiYWRtaW4ifQ.EDHVyMuW-q6qbjR3OrpY_H19wNX6hESwnN4VzbAKUSg
