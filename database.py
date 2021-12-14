@@ -14,12 +14,6 @@ def initialiseConnection():
             database=os.environ.get("DATABASE_NAME"),
             port=os.environ.get("DATABASE_PORT"))
 
-        """connection = psycopg2.connect(user="postgres",
-                                      password="azerty",
-                                      host="localhost",
-                                      database="PFE",
-                                      port="5432")"""
-
         print("DATABASE CONNECTED")
         return connection
     except (Exception, psycopg2.DatabaseError) as e:
