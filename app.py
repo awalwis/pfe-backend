@@ -209,8 +209,8 @@ def get_ad(ad_id):
 @ app.route('/api/annonces', methods=['POST'])
 def add_ad():
     try:
-        """jwt.decode(request.headers.get(
-            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])"""
+        jwt.decode(request.headers.get('Authorization'),
+                   "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
 
         result = database.createAd(request.json)
         return jsonify(result), 201
@@ -381,6 +381,8 @@ def delete_media(media_id):
         return jsonify({e.__class__.__name__: e.args[0]}), 500
 
 # ROUTES NOTIFICATIONS~
+
+
 @app.route('/api/notifications/<int:user_id>', methods=['GET'])
 def get_notifications_from_user(user_id):
     try:
@@ -397,6 +399,7 @@ def get_notifications_from_user(user_id):
     except (Exception) as e:
         return jsonify({e.__class__.__name__: e.args[0]}), 500
 
+
 @ app.route('/api/notification', methods=['POST'])
 def create_notification():
     try:
@@ -407,9 +410,10 @@ def create_notification():
         result = database.createNotification(request.json)
         return jsonify(result), 201
     except (jwt.InvalidTokenError) as e:
-         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
+        return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
         return jsonify({e.__class__.__name__: e.args[0]}), 500
+
 
 @ app.route('/api/notifications/<int:notification_id>', methods=['DELETE'])
 def deleteNotification(notification_id):
@@ -424,6 +428,7 @@ def deleteNotification(notification_id):
         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
     except (Exception) as e:
         return jsonify({e.__class__.__name__: e.args[0]}), 500
+
 
 @app.route('/api/notifications/<int:id_notification>', methods=['PUT'])
 def update_notification(notification_id):
