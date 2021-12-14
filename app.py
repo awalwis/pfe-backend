@@ -209,7 +209,6 @@ def get_ad(ad_id):
 @ app.route('/api/annonces', methods=['POST'])
 def add_ad():
     try:
-        print("TOKEN :", request.headers.get('Authorization'))
         jwt.decode(request.headers.get('Authorization'),
                    "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
 
