@@ -22,10 +22,10 @@ CORS(app)
 @app.route('/api/utilisateurs', methods=['GET'])
 def get_users():
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            raise ValueError("NOT AUTHORIZED")"""
+            raise ValueError("NOT AUTHORIZED")
 
         result = database.getUsers()
         return jsonify({'users': result}), 200
@@ -38,11 +38,11 @@ def get_users():
 @app.route('/api/utilisateurs/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
             if(user_id != decodedToken['user']):
-                raise ValueError("NOT AUTHORIZED")"""
+                raise ValueError("NOT AUTHORIZED")
 
         result = database.getUser(user_id)
         return jsonify({'user': result}), 200
@@ -73,11 +73,11 @@ def add_user():
 @ app.route('/api/utilisateurs/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
             if(user_id != decodedToken['user']):
-                raise ValueError("NOT AUTHORIZED")"""
+                raise ValueError("NOT AUTHORIZED")
 
         database.updateUser(request.json, user_id)
         return jsonify({'user': 'user update'}), 200
@@ -90,11 +90,11 @@ def update_user(user_id):
 @ app.route('/api/utilisateurs/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
             if(user_id != decodedToken['user']):
-                raise ValueError("NOT AUTHORIZED")"""
+                raise ValueError("NOT AUTHORIZED")
 
         database.deleteUser(user_id)
         return jsonify({'user': 'user deleted'}), 200
@@ -179,10 +179,10 @@ def get_ads():
 @ app.route('/api/annonces/all', methods=['GET'])
 def get_all_ads():
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            raise ValueError("NOT AUTHORIZED")"""
+            raise ValueError("NOT AUTHORIZED")
 
         result = database.getAllAds()
         return jsonify({'ads': result}), 200
@@ -195,8 +195,8 @@ def get_all_ads():
 @ app.route('/api/annonces/<int:ad_id>', methods=['GET'])
 def get_ad(ad_id):
     try:
-        """jwt.decode(request.headers.get(
-            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])"""
+        jwt.decode(request.headers.get(
+            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
 
         result = database.getAd(ad_id)
         return jsonify({'ad': result}), 200
@@ -224,12 +224,12 @@ def add_ad():
 @ app.route('/api/annonces/<int:ad_id>', methods=['DELETE'])
 def delete_ad(ad_id):
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
             ad = database.getAd(ad_id)
             if(ad['id_user'] != decodedToken['user']):
-                raise ValueError("NOT AUTHORIZED")"""
+                raise ValueError("NOT AUTHORIZED")
 
         database.deleteAd(ad_id)
         return jsonify({'ad': 'annonce supprimee'}), 200
@@ -242,12 +242,12 @@ def delete_ad(ad_id):
 @ app.route('/api/annonces/<int:ad_id>', methods=['PUT'])
 def update_ad(ad_id):
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
             ad = database.getAd(ad_id)
             if(ad['id_user'] != decodedToken['user']):
-                raise ValueError("NOT AUTHORIZED")"""
+                raise ValueError("NOT AUTHORIZED")
 
         database.updateAd(request.json, ad_id)
         return jsonify({'ad': 'annonce update'}), 200
@@ -280,10 +280,10 @@ def get_category(category_id):
 @ app.route('/api/categories', methods=['POST'])
 def add_category():
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            raise ValueError("NOT AUTHORIZED")"""
+            raise ValueError("NOT AUTHORIZED")
 
         database.createCategory(request.json)
         return jsonify({'category': 'category created'}), 201
@@ -296,10 +296,10 @@ def add_category():
 @ app.route('/api/categories/<int:category_id>', methods=['DELETE'])
 def delete_category(category_id):
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            raise ValueError("NOT AUTHORIZED")"""
+            raise ValueError("NOT AUTHORIZED")
         database.deleteCategory(category_id)
         return jsonify({'category': 'category '+str(category_id)+' supprimee'}), 200
     except (jwt.InvalidTokenError) as e:
@@ -313,10 +313,10 @@ def delete_category(category_id):
 @ app.route('/api/medias', methods=['GET'])
 def get_medias():
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            raise ValueError("NOT AUTHORIZED")"""
+            raise ValueError("NOT AUTHORIZED")
 
         result = database.getMedias()
         return jsonify({'medias': result}), 200
@@ -338,8 +338,8 @@ def get_media(media_id):
 @ app.route('/api/medias/ad/<int:ad_id>', methods=['GET'])
 def get_media_by_ad_id(ad_id):
     try:
-        """jwt.decode(request.headers.get(
-            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])"""
+        jwt.decode(request.headers.get(
+            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
 
         result = database.getMediaByIdAd(ad_id)
         return jsonify({'medias': result}), 200
@@ -352,8 +352,8 @@ def get_media_by_ad_id(ad_id):
 @ app.route('/api/medias', methods=['POST'])
 def add_media():
     try:
-        """jwt.decode(request.headers.get(
-            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])"""
+        jwt.decode(request.headers.get(
+            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
 
         database.createMedia(request.json)
         return jsonify({'media': 'media created'}), 201
@@ -366,13 +366,13 @@ def add_media():
 @ app.route('/api/medias/<int:media_id>', methods=['DELETE'])
 def delete_media(media_id):
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
             media = database.getMediaById(media_id)
             ad = database.getAd(media['id_ad'])
             if(ad['id_user'] != decodedToken['user']):
-                raise ValueError("NOT AUTHORIZED")"""
+                raise ValueError("NOT AUTHORIZED")
 
         database.deleteMedia(media_id)
         return jsonify({'media': 'media supprimee'}), 200
@@ -388,10 +388,10 @@ def delete_media(media_id):
 def get_notifications_from_user(user_id):
     try:
 
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
-            if(user_id != decodedToken['user']):
-                raise ValueError("NOT AUTHORIZED")"""
+        if(user_id != decodedToken['user']):
+            raise ValueError("NOT AUTHORIZED")
 
         result = database.getAllNotificationsById(user_id)
         return (jsonify({'notifications': result}))
@@ -404,10 +404,11 @@ def get_notifications_from_user(user_id):
 @ app.route('/api/notification', methods=['POST'])
 def create_notification():
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            raise ValueError("NOT AUTHORIZED")"""
+            raise ValueError("NOT AUTHORIZED")
+
         result = database.createNotification(request.json)
         return jsonify(result), 201
     except (jwt.InvalidTokenError) as e:
@@ -419,10 +420,10 @@ def create_notification():
 @ app.route('/api/notifications/<int:notification_id>', methods=['DELETE'])
 def deleteNotification(notification_id):
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
-            if(request.user_id != decodedToken['user']):
-                raise ValueError("NOT AUTHORIZED")"""
+        if(request.user_id != decodedToken['user']):
+            raise ValueError("NOT AUTHORIZED")
         database.deleteMedia(notification_id)
         return jsonify({'notification': 'notification supprimee'}), 200
     except (jwt.InvalidTokenError) as e:
@@ -434,10 +435,10 @@ def deleteNotification(notification_id):
 @app.route('/api/notifications/<int:id_notification>', methods=['PUT'])
 def update_notification(notification_id):
     try:
-        """decodedToken = jwt.decode(request.headers.get(
+        decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
-            if(request.user_id != decodedToken['user']):
-                raise ValueError("NOT AUTHORIZED")"""
+        if(request.user_id != decodedToken['user']):
+            raise ValueError("NOT AUTHORIZED")
         database.updateNotification(request.json, notification_id)
         return jsonify({'notification': 'notification update'})
     except (jwt.InvalidTokenError) as e:
