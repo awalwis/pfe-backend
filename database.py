@@ -531,7 +531,7 @@ def getAd(id):
             "description": result[2],
             "price": result[3],
             "date": result[4],
-            "sate": result[5],
+            "state": result[5],
             "type": result[6],
             "displayed_picture": result[7],
             "id_user": result[8],
@@ -837,27 +837,6 @@ def getMediaByIdAd(ad_id):
         cursor.close()
         connection.close()
 
-
-def deleteMedia(id):
-    connection = initialiseConnection()
-    cursor = connection.cursor()
-    sql = "DELETE FROM pfe.medias WHERE id_media = %i" % (id)
-    try:
-        cursor.execute(sql)
-        connection.commit()
-    except (Exception, psycopg2.DatabaseError) as e:
-        try:
-            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
-            raise Exception from e
-        except IndexError:
-            connection.rollback()
-            print("SQL Error: %s" % str(e))
-            raise Exception from e
-    finally:
-        cursor.close()
-        connection.close()
-
-
 def createMedia(media):
     connection = initialiseConnection()
     cursor = connection.cursor()
@@ -898,3 +877,85 @@ def deleteMedia(id):
     finally:
         cursor.close()
         connection.close()
+
+def getAllNotificationsById(id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.notifications WHERE id_user = %i" % (id)
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
+
+def createNotification(notification):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "INSERT INTO pfe.notifications VALUES(DEFAULT, %i, DEFAULT, '%s')" % (
+        notification['id_user'], notification['message']
+    )
+    try:
+        cursor.execute(sql)
+        connection.commit()
+
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
+
+def deleteNotification(id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "DELETE FROM pfe.notifications WHERE id_notification = %i" % (id)
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
+
+def updateNotification(notification, id):
+    connection = initialiseConnection()
+    cursor= connection.cursor()
+    sql="UPDATE pfe.notifications SET isSeen='%s', message='%s' WHERE id_user=%i" % (
+        notification['isSeen'], notification['message'], id
+    )
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
+

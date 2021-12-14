@@ -380,6 +380,65 @@ def delete_media(media_id):
     except (Exception) as e:
         return jsonify({e.__class__.__name__: e.args[0]}), 500
 
+# ROUTES NOTIFICATIONS~
+@app.route('/api/notifications/<int:user_id>', methods=['GET'])
+def get_notifications_from_user(user_id):
+    try:
+
+        """decodedToken = jwt.decode(request.headers.get(
+            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
+            if(user_id != decodedToken['user']):
+                raise ValueError("NOT AUTHORIZED")"""
+
+        result = database.getAllNotificationsById(user_id)
+        return (jsonify({'notifications': result}))
+    except (jwt.InvalidTokenError) as e:
+        return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
+    except (Exception) as e:
+        return jsonify({e.__class__.__name__: e.args[0]}), 500
+
+@ app.route('/api/notification', methods=['POST'])
+def create_notification():
+    try:
+        """decodedToken = jwt.decode(request.headers.get(
+            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
+        if(decodedToken['role'] != "admin"):
+            raise ValueError("NOT AUTHORIZED")"""
+        result = database.createNotification(request.json)
+        return jsonify(result), 201
+    except (jwt.InvalidTokenError) as e:
+         return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
+    except (Exception) as e:
+        return jsonify({e.__class__.__name__: e.args[0]}), 500
+
+@ app.route('/api/notifications/<int:notification_id>', methods=['DELETE'])
+def deleteNotification(notification_id):
+    try:
+        """decodedToken = jwt.decode(request.headers.get(
+            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
+            if(request.user_id != decodedToken['user']):
+                raise ValueError("NOT AUTHORIZED")"""
+        database.deleteMedia(notification_id)
+        return jsonify({'notification': 'notification supprimee'}), 200
+    except (jwt.InvalidTokenError) as e:
+        return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
+    except (Exception) as e:
+        return jsonify({e.__class__.__name__: e.args[0]}), 500
+
+@app.route('/api/notifications/<int:id_notification>', methods=['PUT'])
+def update_notification(notification_id):
+    try:
+        """decodedToken = jwt.decode(request.headers.get(
+            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
+            if(request.user_id != decodedToken['user']):
+                raise ValueError("NOT AUTHORIZED")"""
+        database.updateNotification(request.json, notification_id)
+        return jsonify({'notification': 'notification update'})
+    except (jwt.InvalidTokenError) as e:
+        return jsonify({e.__class__.__name__: "INVALID TOKEN"}), 500
+    except (Exception) as e:
+        return jsonify({e.__class__.__name__: e.args[0]}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
