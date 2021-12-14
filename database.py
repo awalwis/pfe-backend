@@ -898,3 +898,63 @@ def deleteMedia(id):
     finally:
         cursor.close()
         connection.close()
+
+def getAllNotificationsById(id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.notifications WHERE id_user = %i" % (id)
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
+
+def createNotification(notification):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "INSERT INTO pfe.notifications VALUES(DEFAULT, %i, DEFAULT, '%s')" % (
+        notification['id_user'], notification['message']
+    )
+    try:
+        cursor.execute(sql)
+        connection.commit()
+
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
+
+def deleteNotification(id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "DELETE FROM pfe.notifications WHERE id_notification = %i" % (id)
+    try:
+        cursor.execute(sql)
+        connection.commit()
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
