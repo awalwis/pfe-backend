@@ -245,6 +245,8 @@ def update_ad(ad_id):
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
             ad = database.getAd(ad_id)
+            print(ad['id_user'])
+            print(decodedToken['user'])
             if(ad['id_user'] != decodedToken['user']):
                 raise ValueError("NOT AUTHORIZED")
 
