@@ -516,11 +516,45 @@ def getAllAds():
         cursor.close()
         connection.close()
 
-
-def getAdWithIdUser(id_user):
+def getAllAdUser(id_user):
     connection = initialiseConnection()
     cursor = connection.cursor()
     sql = "SELECT * FROM pfe.ads WHERE id_user = %i" % (id_user)
+    resultsExportAds = []
+    try:
+        cursor.execute(sql)
+        connection.commit()
+        results = cursor.fetchall()
+        for row in results:
+            ad = {
+                "id_ad": row[0],
+                "title": row[1],
+                "description": row[2],
+                "price": row[3],
+                "date": row[4],
+                "state": row[5],
+                "type": row[6],
+                "displayed_picture": row[7],
+                "id_user": row[8],
+                "id_category": row[9]
+            }
+            resultsExportAds.append(ad)
+        return resultsExportAds
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
+
+def getAllAdAvailableUser(id_user):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.ads WHERE id_user = %i AND state='disponible'" % (id_user)
     resultsExportAds = []
     try:
         cursor.execute(sql)
