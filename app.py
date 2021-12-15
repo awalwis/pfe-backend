@@ -41,7 +41,7 @@ def get_user(user_id):
         decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            if(user_id != decodedToken['user']):
+            if(user_id != decodedToken['id_user']):
                 raise ValueError("NOT AUTHORIZED")
 
         result = database.getUser(user_id)
@@ -76,7 +76,7 @@ def update_user(user_id):
         decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            if(user_id != decodedToken['user']):
+            if(user_id != decodedToken['id_user']):
                 raise ValueError("NOT AUTHORIZED")
 
         database.updateUser(request.json, user_id)
@@ -93,7 +93,7 @@ def delete_user(user_id):
         decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            if(user_id != decodedToken['user']):
+            if(user_id != decodedToken['id_user']):
                 raise ValueError("NOT AUTHORIZED")
 
         database.deleteUser(user_id)
@@ -227,7 +227,7 @@ def delete_ad(ad_id):
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
             ad = database.getAd(ad_id)
-            if(ad['id_user'] != decodedToken['user']):
+            if(ad['id_user'] != decodedToken['id_user']):
                 raise ValueError("NOT AUTHORIZED")
 
         database.deleteAd(ad_id)
@@ -245,9 +245,9 @@ def update_ad(ad_id):
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
             ad = database.getAd(ad_id)
-            print(ad['id_user'])
-            print(decodedToken['user'])
-            if(ad['id_user'] != decodedToken['user']):
+            print("USER ID : ", ad['id_user'])
+            print("USER TOKEN : ", decodedToken['id_user'])
+            if(ad['id_user'] != decodedToken['id_user']):
                 raise ValueError("NOT AUTHORIZED")
 
         database.updateAd(request.json, ad_id)
@@ -367,7 +367,7 @@ def delete_media(media_id):
         if(decodedToken['role'] != "admin"):
             media = database.getMediaById(media_id)
             ad = database.getAd(media['id_ad'])
-            if(ad['id_user'] != decodedToken['user']):
+            if(ad['id_user'] != decodedToken['id_user']):
                 raise ValueError("NOT AUTHORIZED")
 
         database.deleteMedia(media_id)
@@ -386,7 +386,7 @@ def get_notifications_from_user(user_id):
 
         decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
-        if(user_id != decodedToken['user']):
+        if(user_id != decodedToken['id_user']):
             raise ValueError("NOT AUTHORIZED")
 
         result = database.getAllNotificationsById(user_id)
@@ -418,7 +418,7 @@ def deleteNotification(notification_id):
     try:
         decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
-        if(request.user_id != decodedToken['user']):
+        if(request.user_id != decodedToken['id_user']):
             raise ValueError("NOT AUTHORIZED")
         database.deleteMedia(notification_id)
         return jsonify({'notification': 'notification supprimee'}), 200
@@ -433,7 +433,7 @@ def update_notification(notification_id):
     try:
         decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
-        if(request.user_id != decodedToken['user']):
+        if(request.user_id != decodedToken['id_user']):
             raise ValueError("NOT AUTHORIZED")
         database.updateNotification(request.json, notification_id)
         return jsonify({'notification': 'notification update'})
