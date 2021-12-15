@@ -312,11 +312,6 @@ def delete_category(category_id):
 @ app.route('/api/medias', methods=['GET'])
 def get_medias():
     try:
-        decodedToken = jwt.decode(request.headers.get(
-            'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
-        if(decodedToken['role'] != "admin"):
-            raise ValueError("NOT AUTHORIZED")
-
         result = database.getMedias()
         return jsonify({'medias': result}), 200
     except (jwt.InvalidTokenError) as e:
