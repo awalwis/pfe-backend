@@ -516,6 +516,7 @@ def getAllAds():
         cursor.close()
         connection.close()
 
+
 def getAllAdUser(id_user):
     connection = initialiseConnection()
     cursor = connection.cursor()
@@ -551,10 +552,12 @@ def getAllAdUser(id_user):
         cursor.close()
         connection.close()
 
+
 def getAllAdAvailableUser(id_user):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.ads WHERE id_user = %i AND state='disponible'" % (id_user)
+    sql = "SELECT * FROM pfe.ads WHERE id_user = %i AND state='disponible'" % (
+        id_user)
     resultsExportAds = []
     try:
         cursor.execute(sql)
@@ -950,13 +953,52 @@ def deleteMedia(id):
         connection.close()
 
 
-def getAllNotificationsById(id):
+def getAllNotificationsByUserId(id):
     connection = initialiseConnection()
     cursor = connection.cursor()
     sql = "SELECT * FROM pfe.notifications WHERE id_user = %i" % (id)
+    resultNotifications = []
     try:
         cursor.execute(sql)
         connection.commit()
+        results = cursor.fetchall()
+        for row in results:
+            notification = {
+                "id_notification": row[0],
+                "isseen": row[1],
+                "message": row[2],
+                "id_user": row[3]
+            }
+            resultNotifications.append(notification)
+        return resultNotifications
+    except (Exception, psycopg2.DatabaseError) as e:
+        try:
+            print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
+            raise Exception from e
+        except IndexError:
+            connection.rollback()
+            print("SQL Error: %s" % str(e))
+            raise Exception from e
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def getNotificationsById(id):
+    connection = initialiseConnection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM pfe.notifications WHERE id_notification = %i" % (id)
+    try:
+        cursor.execute(sql)
+        connection.commit()
+        results = cursor.fetchone()
+        notification = {
+            "id_notification": results[0],
+            "isseen": results[1],
+            "message": results[2],
+            "id_user": results[3]
+        }
+        return notification
     except (Exception, psycopg2.DatabaseError) as e:
         try:
             print("SQL Error [%d]: %s" % (e.args[0], e.args[1]))
@@ -973,8 +1015,8 @@ def getAllNotificationsById(id):
 def createNotification(notification):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "INSERT INTO pfe.notifications VALUES(DEFAULT, %i, DEFAULT, '%s')" % (
-        notification['id_user'], notification['message']
+    sql = "INSERT INTO pfe.notifications VALUES(DEFAULT, DEFAULT, '%s', %i)" % (
+        notification['message'], notification['id_user']
     )
     try:
         cursor.execute(sql)
@@ -1016,8 +1058,8 @@ def deleteNotification(id):
 def updateNotification(notification, id):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "UPDATE pfe.notifications SET isSeen='%s', message='%s' WHERE id_user=%i" % (
-        notification['isSeen'], notification['message'], id
+    sql = "UPDATE pfe.notifications SET isSeen='%s', message='%s' WHERE id_notification=%i" % (
+        notification['isseen'], notification['message'], id
     )
     try:
         cursor.execute(sql)
