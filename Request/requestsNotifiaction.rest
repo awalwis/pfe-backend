@@ -10,18 +10,18 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJyb2xlIjoi
 
 ###
 
-DELETE http://localhost:5000/api/notifications/2
+DELETE http://localhost:5000/api/notifications/6
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Mzk2MTIyODl9.UEnEKsu8ilc8e0uAMM_MRTiiFLiCZtwYNt4Z-ZY8Rrc
 
 ###
 
-PUT http://localhost:5000/api/notifications/1
+PUT http://localhost:5000/api/notifications/7
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Mzk2MTIyODl9.UEnEKsu8ilc8e0uAMM_MRTiiFLiCZtwYNt4Z-ZY8Rrc
 
 {
-    "isseen": true,
+    "isSeen": true,
     "date":"16/12/2021",
     "message":"L''etat de SASA''...'' a été changé par ''...''",
     "id_user": 1

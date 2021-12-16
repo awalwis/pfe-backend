@@ -956,7 +956,8 @@ def deleteMedia(id):
 def getAllNotificationsByUserId(id):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "SELECT * FROM pfe.notifications WHERE id_user = %i" % (id)
+    sql = "SELECT * FROM pfe.notifications WHERE id_user = %i ORDER BY date DESC ,id_notification DESC" % (
+        id)
     resultNotifications = []
     try:
         cursor.execute(sql)
