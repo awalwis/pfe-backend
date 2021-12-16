@@ -965,9 +965,10 @@ def getAllNotificationsByUserId(id):
         for row in results:
             notification = {
                 "id_notification": row[0],
-                "isseen": row[1],
+                "isSeen": row[1],
                 "message": row[2],
-                "id_user": row[3]
+                "date": row[3],
+                "id_user": row[4]
             }
             resultNotifications.append(notification)
         return resultNotifications
@@ -994,9 +995,10 @@ def getNotificationsById(id):
         results = cursor.fetchone()
         notification = {
             "id_notification": results[0],
-            "isseen": results[1],
+            "isSeen": results[1],
             "message": results[2],
-            "id_user": results[3]
+            "date": results[3],
+            "id_user": results[4]
         }
         return notification
     except (Exception, psycopg2.DatabaseError) as e:
@@ -1015,8 +1017,8 @@ def getNotificationsById(id):
 def createNotification(notification):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "INSERT INTO pfe.notifications VALUES(DEFAULT, DEFAULT, '%s', %i)" % (
-        notification['message'], notification['id_user']
+    sql = "INSERT INTO pfe.notifications VALUES(DEFAULT, DEFAULT, '%s', '%s', %i)" % (
+        notification['message'], notification['date'], notification['id_user']
     )
     try:
         cursor.execute(sql)
@@ -1058,8 +1060,8 @@ def deleteNotification(id):
 def updateNotification(notification, id):
     connection = initialiseConnection()
     cursor = connection.cursor()
-    sql = "UPDATE pfe.notifications SET isSeen='%s', message='%s' WHERE id_notification=%i" % (
-        notification['isseen'], notification['message'], id
+    sql = "UPDATE pfe.notifications SET isSeen='%s', message='%s', date='%s' WHERE id_notification=%i" % (
+        notification['isSeen'], notification['message'], notification['date'], id
     )
     try:
         cursor.execute(sql)
