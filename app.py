@@ -433,7 +433,8 @@ def create_notification():
         decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
         if(decodedToken['role'] != "admin"):
-            raise ValueError("NOT AUTHORIZED")
+            if(request.json['id_user'] != decodedToken['id_user']):
+                raise ValueError("NOT AUTHORIZED")
 
         database.createNotification(request.json)
         return jsonify({'notification': 'notification created'}), 201
@@ -466,8 +467,9 @@ def update_notification(notification_id):
         print(request.json)
         decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
-        if(request.json['id_user'] != decodedToken['id_user']):
-            raise ValueError("NOT AUTHORIZED")
+        if(decodedToken['role'] != "admin"):
+            if(request.json['id_user'] != decodedToken['id_user']):
+                raise ValueError("NOT AUTHORIZED")
         print(request.json)
         database.updateNotification(request.json, notification_id)
         return jsonify({'notification': 'notification update'})
