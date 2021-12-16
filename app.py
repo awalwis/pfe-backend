@@ -38,11 +38,8 @@ def get_users():
 @app.route('/api/utilisateurs/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     try:
-        decodedToken = jwt.decode(request.headers.get(
+        jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
-        if(decodedToken['role'] != "admin"):
-            if(user_id != decodedToken['id_user']):
-                raise ValueError("NOT AUTHORIZED")
 
         result = database.getUser(user_id)
         return jsonify({'user': result}), 200
