@@ -4,6 +4,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJyb2xlIjoi
 
 {
     "message":"L''etat de votre annonce ''...'' a été changé par ''...''",
+    "date":"16/12/2021",
     "id_user": 1
 }
 
@@ -21,6 +22,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJyb2xlIjoi
 
 {
     "isseen": true,
+    "date":"16/12/2021",
     "message":"L''etat de SASA''...'' a été changé par ''...''",
     "id_user": 1
 }

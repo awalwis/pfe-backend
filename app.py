@@ -448,9 +448,10 @@ def deleteNotification(notification_id):
     try:
         decodedToken = jwt.decode(request.headers.get(
             'Authorization'), "sdkfh5464sdfjlskdjfntmdjfhskjfdhs", algorithms=["HS256"])
-        notification = database.getNotificationsById(notification_id)
-        if(notification['id_user'] != decodedToken['id_user']):
-            raise ValueError("NOT AUTHORIZED")
+        if(decodedToken['role'] != "admin"):
+            notification = database.getNotificationsById(notification_id)
+            if(notification['id_user'] != decodedToken['id_user']):
+                raise ValueError("NOT AUTHORIZED")
         database.deleteNotification(notification_id)
         return jsonify({'notification': 'notification supprimee'}), 200
     except (jwt.InvalidTokenError) as e:
